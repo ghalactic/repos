@@ -1,0 +1,14 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    reviewers:
+      - ghalactic/dependabot-reviewers
+  - package-ecosystem: terraform
+    directory: /
+    schedule:
+      interval: weekly
+    reviewers:
+      - ghalactic/dependabot-reviewers
