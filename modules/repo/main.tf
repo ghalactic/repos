@@ -8,9 +8,9 @@ resource "github_repository" "this" {
   visibility  = "public"
 
   auto_init    = true
-  has_issues   = true
   has_projects = false
   has_wiki     = false
+  has_issues   = !var.is_template
 
   delete_branch_on_merge = true
   vulnerability_alerts   = true
@@ -23,6 +23,11 @@ resource "github_repository" "this" {
       repository = var.template.repository
     }
   }
+}
+
+resource "github_actions_repository_permissions" "this" {
+  repository = github_repository.this.name
+  enabled    = !var.is_template
 }
 
 data "github_repository" "this" {
