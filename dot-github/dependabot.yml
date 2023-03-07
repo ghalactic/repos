@@ -1,21 +1,11 @@
 # DO NOT EDIT - This file is managed by ghalactic/repos.
 version: 2
 updates:
-  - package-ecosystem: docker
+%{~ for ecosystem in ecosystems }
+  - package-ecosystem: ${ ecosystem }
     directory: /
     schedule:
       interval: weekly
     reviewers:
       - ghalactic/dependabot-reviewers
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: weekly
-    reviewers:
-      - ghalactic/dependabot-reviewers
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: weekly
-    reviewers:
-      - ghalactic/dependabot-reviewers
+%{~ endfor }

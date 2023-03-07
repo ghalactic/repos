@@ -35,3 +35,9 @@ variable "ci_workflows" {
   type        = list(string)
   default     = []
 }
+
+variable "dependabot_ecosystems" {
+  description = "The Dependabot ecosystems to use"
+  type        = list(string)
+  default     = []
+}

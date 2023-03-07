@@ -9,5 +9,7 @@ resource "github_repository_file" "dot_github_dependabot_yml" {
   commit_message      = "Update Dependabot configuration"
   overwrite_on_create = true
 
-  content = file("dot-github/dependabot.yml")
+  content = templatefile("dot-github/dependabot.yml", {
+    ecosystems = var.dependabot_ecosystems
+  })
 }
