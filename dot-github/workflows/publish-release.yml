@@ -1,4 +1,4 @@
-# DO NOT EDIT - This file is managed by ghalactic/repos.
+# DO NOT EDIT - This file is managed by ${ org }/repos.
 name: Publish release
 on:
   push:
@@ -6,5 +6,5 @@ on:
       - "*"
 jobs:
   publish:
-    name: Ghalactic
-    uses: ghalactic/repos/.github/workflows/shared-publish-release.yml@main
+    name: ${ org_name }
+    uses: ${ org }/repos/.github/workflows/shared-publish-release.yml@main

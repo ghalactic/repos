@@ -9,7 +9,10 @@ resource "github_repository_file" "dot_github_workflows_ci_scheduled_yml" {
   commit_message      = "Update \"CI (scheduled)\" GHA workflow"
   overwrite_on_create = true
 
-  content = file("dot-github/workflows/ci-${each.value}-scheduled.yml")
+  content = templatefile("dot-github/workflows/ci-${each.value}-scheduled.yml", {
+    org      = module.constants.org
+    org_name = module.constants.org_name
+  })
 }
 
 resource "github_repository_file" "dot_github_workflows_ci_yml" {
@@ -20,9 +23,13 @@ resource "github_repository_file" "dot_github_workflows_ci_yml" {
   repository          = github_repository.this.name
   branch              = data.github_repository.this.default_branch
   file                = ".github/workflows/ci-${each.value}.yml"
-  content             = file("dot-github/workflows/ci-${each.value}.yml")
   commit_message      = "Update \"CI\" GHA workflow"
   overwrite_on_create = true
+
+  content = templatefile("dot-github/workflows/ci-${each.value}.yml", {
+    org      = module.constants.org
+    org_name = module.constants.org_name
+  })
 }
 
 resource "github_repository_file" "dot_github_workflows_publish_release_yml" {
@@ -36,5 +43,8 @@ resource "github_repository_file" "dot_github_workflows_publish_release_yml" {
   commit_message      = "Update \"Publish release\" GHA workflow"
   overwrite_on_create = true
 
-  content = file("dot-github/workflows/publish-release.yml")
+  content = templatefile("dot-github/workflows/publish-release.yml", {
+    org      = module.constants.org
+    org_name = module.constants.org_name
+  })
 }

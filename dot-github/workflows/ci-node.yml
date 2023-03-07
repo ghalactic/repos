@@ -1,9 +1,9 @@
-# DO NOT EDIT - This file is managed by ghalactic/repos.
+# DO NOT EDIT - This file is managed by ${ org }/repos.
 name: CI
 on:
   push:
   pull_request:
 jobs:
   ci:
-    name: Ghalactic
-    uses: ghalactic/repos/.github/workflows/shared-ci-node.yml@main
+    name: ${ org_name }
+    uses: ${ org }/repos/.github/workflows/shared-ci-node.yml@main

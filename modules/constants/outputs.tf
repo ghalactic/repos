@@ -15,3 +15,8 @@ output "org" {
   description = "The GitHub organization"
   value       = "ghalactic"
 }
+
+output "org_name" {
+  description = "The GitHub organization's display name"
+  value       = "Ghalactic"
+}

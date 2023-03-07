@@ -11,5 +11,6 @@ resource "github_repository_file" "dot_github_dependabot_yml" {
 
   content = templatefile("dot-github/dependabot.yml", {
     ecosystems = var.dependabot_ecosystems
+    org        = module.constants.org
   })
 }
