@@ -26,8 +26,9 @@ resource "github_repository" "this" {
 }
 
 resource "github_actions_repository_permissions" "this" {
-  repository = github_repository.this.name
-  enabled    = !var.is_template
+  repository      = github_repository.this.name
+  allowed_actions = "all"
+  enabled         = !var.is_template
 }
 
 data "github_repository" "this" {
