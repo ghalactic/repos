@@ -36,6 +36,12 @@ variable "ci_workflows" {
   default     = []
 }
 
+variable "publish_release_workflow" {
+  description = "Whether to add a basic GitHub Actions release publishing workflow"
+  type        = bool
+  default     = true
+}
+
 variable "dependabot_ecosystems" {
   description = "The Dependabot ecosystems to use"
   type        = list(string)

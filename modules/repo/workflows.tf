@@ -33,7 +33,7 @@ resource "github_repository_file" "dot_github_workflows_ci_yml" {
 }
 
 resource "github_repository_file" "dot_github_workflows_publish_release_yml" {
-  for_each = toset(["basic"])
+  for_each = toset(var.publish_release_workflow ? ["basic"] : [])
 
   commit_author       = module.constants.committer.name
   commit_email        = module.constants.committer.email

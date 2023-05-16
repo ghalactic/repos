@@ -3,5 +3,6 @@ module "repo_branding" {
   name        = "branding"
   description = "Branding assets for Ghalactic"
 
-  dependabot_ecosystems = ["github-actions", "npm"]
+  publish_release_workflow = false
+  dependabot_ecosystems    = ["github-actions", "npm"]
 }
