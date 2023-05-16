@@ -23,6 +23,16 @@ resource "github_repository" "this" {
       repository = var.template.repository
     }
   }
+
+  dynamic "pages" {
+    for_each = var.pages_branch == null ? [] : [null]
+
+    content {
+      source {
+        branch = var.pages_branch
+      }
+    }
+  }
 }
 
 resource "github_actions_repository_permissions" "this" {

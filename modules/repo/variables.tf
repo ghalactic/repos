@@ -30,6 +30,12 @@ variable "template" {
   default     = null
 }
 
+variable "pages_branch" {
+  description = "The pages branch to use"
+  type        = string
+  default     = null
+}
+
 variable "ci_workflows" {
   description = "The GitHub Actions CI workflows to use"
   type        = list(string)
