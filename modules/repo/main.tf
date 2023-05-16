@@ -1,11 +1,12 @@
 resource "github_repository" "this" {
   archive_on_destroy = true
 
-  name        = var.name
-  description = var.description
-  topics      = var.topics
-  is_template = var.is_template
-  visibility  = "public"
+  name         = var.name
+  description  = var.description
+  topics       = var.topics
+  homepage_url = var.homepage_url
+  is_template  = var.is_template
+  visibility   = "public"
 
   auto_init    = true
   has_projects = false

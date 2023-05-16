@@ -18,6 +18,12 @@ variable "topics" {
   default     = []
 }
 
+variable "homepage_url" {
+  description = "The homepage URL"
+  type        = string
+  default     = null
+}
+
 variable "is_template" {
   description = "Whether the repository is a template"
   type        = bool
