@@ -41,18 +41,10 @@ resource "github_actions_repository_permissions" "this" {
   enabled         = !var.is_template
 }
 
-data "github_repository" "this" {
-  depends_on = [
-    github_repository.this
-  ]
-
-  name = var.name
-}
-
 resource "github_branch_protection" "default_branch" {
   repository_id = github_repository.this.node_id
 
-  pattern        = data.github_repository.this.default_branch
+  pattern        = var.default_branch
   enforce_admins = true
 }
 
