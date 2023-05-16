@@ -5,9 +5,4 @@ module "repo_github_credential_rotation_action" {
 
   ci_workflows          = ["node"]
   dependabot_ecosystems = ["docker", "github-actions", "npm"]
-
-  template = {
-    owner      = module.constants.org
-    repository = module.repo_docker_node_action_template.name
-  }
 }
