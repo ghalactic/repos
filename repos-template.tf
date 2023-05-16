@@ -1,3 +1,14 @@
+module "repo_action_template" {
+  source      = "./modules/repo"
+  name        = "action-template"
+  description = "A template repo for creating GitHub Actions"
+
+  ci_workflows          = ["node"]
+  dependabot_ecosystems = ["github-actions", "npm"]
+
+  is_template = true
+}
+
 module "repo_docker_node_action_template" {
   source      = "./modules/repo"
   name        = "docker-node-action-template"
