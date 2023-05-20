@@ -9,3 +9,14 @@ module "repo_branding" {
   publish_release_workflow = false
   dependabot_ecosystems    = ["github-actions", "npm"]
 }
+
+module "repo_org_dot_github_dot_io" {
+  source       = "./modules/repo"
+  name         = "ghalactic.github.io"
+  description  = "The Ghalactic website"
+  homepage_url = "https://ghalactic.github.io"
+
+  pages_branch = "main"
+
+  publish_release_workflow = false
+}
