@@ -1,5 +1,5 @@
 resource "github_repository_file" "dot_github_dependabot_yml" {
-  count = 1
+  count = length(var.dependabot_ecosystems) > 0 ? 1 : 0
 
   commit_author       = module.constants.committer.name
   commit_email        = module.constants.committer.email
