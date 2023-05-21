@@ -24,4 +24,6 @@ module "repo_github_release_from_tag" {
   ci_workflows             = []
   publish_release_workflow = false
   dependabot_ecosystems    = ["github-actions", "npm"]
+
+  has_discussions = true
 }

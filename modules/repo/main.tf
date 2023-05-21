@@ -8,10 +8,11 @@ resource "github_repository" "this" {
   is_template  = var.is_template
   visibility   = "public"
 
-  auto_init    = true
-  has_projects = false
-  has_wiki     = false
-  has_issues   = !var.is_template
+  auto_init       = true
+  has_discussions = var.has_discussions
+  has_projects    = false
+  has_wiki        = false
+  has_issues      = !var.is_template
 
   delete_branch_on_merge = true
   vulnerability_alerts   = true

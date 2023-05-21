@@ -65,3 +65,9 @@ variable "dependabot_ecosystems" {
   type        = list(string)
   default     = []
 }
+
+variable "has_discussions" {
+  description = "Whether the repository has discussions"
+  type        = bool
+  default     = false
+}
