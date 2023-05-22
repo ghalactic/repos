@@ -19,6 +19,6 @@ jobs:
         run: make ${{ inputs.make_target }}
 
       - name: Publish release
-        uses: eloquent/github-release-action@v3
+        uses: eloquent/github-release-action@v4
         with:
           reactions: hooray,heart,rocket
