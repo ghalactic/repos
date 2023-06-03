@@ -6,5 +6,6 @@ module "repo_action_template" {
   ci_workflows          = ["action"]
   dependabot_ecosystems = ["github-actions", "npm"]
 
+  has_actions = false
   is_template = true
 }

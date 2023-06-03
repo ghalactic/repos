@@ -60,6 +60,12 @@ variable "dependabot_ecosystems" {
   default     = []
 }
 
+variable "has_actions" {
+  description = "Whether the repository has GitHub Actions enabled"
+  type        = bool
+  default     = true
+}
+
 variable "has_discussions" {
   description = "Whether the repository has discussions"
   type        = bool
