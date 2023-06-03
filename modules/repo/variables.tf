@@ -36,12 +36,6 @@ variable "template" {
   default     = null
 }
 
-variable "default_branch" {
-  description = "The default branch name"
-  type        = string
-  default     = "main"
-}
-
 variable "pages_branch" {
   description = "The pages branch to use"
   type        = string
