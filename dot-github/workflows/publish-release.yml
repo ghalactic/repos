@@ -10,6 +10,7 @@ jobs:
   publish:
     name: ${ org_name }
     uses: ${ org }/repos/.github/workflows/shared-publish-release.yml@main
+    secrets: inherit
     with:
 %{ if discussion_category != "" ~}
       discussionCategory: ${ discussion_category }

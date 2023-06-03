@@ -9,3 +9,4 @@ jobs:
   ci:
     name: ${ org_name }
     uses: ${ org }/repos/.github/workflows/shared-ci-${ ci_type }.yml@main
+    secrets: inherit
