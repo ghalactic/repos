@@ -12,9 +12,10 @@ module "repo_github_release_from_tag" {
     "release-automation",
   ]
 
-  ci_workflows                 = []
-  has_publish_release_workflow = false
-  dependabot_ecosystems        = ["github-actions", "npm"]
+  ci_workflows           = ["action"]
+  dependabot_ecosystems  = ["github-actions", "npm"]
+  release_action_version = "main"
 
-  has_discussions = true
+  has_discussions         = true
+  has_release_discussions = true
 }
