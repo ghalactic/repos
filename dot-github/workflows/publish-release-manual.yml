@@ -1,10 +1,13 @@
 # DO NOT EDIT - This file is managed by ${ org }/repos.
-name: Publish release
+name: Publish release (manual)
 
 on:
-  push:
-    tags:
-      - "*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The tag to publish
+        type: string
+        required: true
 
 jobs:
   publish:
@@ -20,4 +23,4 @@ jobs:
 %{ if release_action_version != "" ~}
       releaseActionVersion: ${ release_action_version }
 %{ endif ~}
-      tag: ${"$"}{{ github.ref_name }}
+      tag: ${"$"}{{ github.event.inputs.tag }}

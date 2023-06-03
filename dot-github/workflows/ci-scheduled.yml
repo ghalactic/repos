@@ -1,11 +1,13 @@
 # DO NOT EDIT - This file is managed by ${ org }/repos.
 name: CI (scheduled)
+
 on:
   schedule:
     - cron: 0 14 * * 0 # Sunday 2PM UTC = Monday 12AM AEST
+
 jobs:
   ci:
     name: ${ org_name }
-    uses: ${ org }/repos/.github/workflows/shared-ci-node.yml@main
+    uses: ${ org }/repos/.github/workflows/shared-ci-${ ci_type }.yml@main
     with:
-      is-scheduled: true
+      isScheduled: true

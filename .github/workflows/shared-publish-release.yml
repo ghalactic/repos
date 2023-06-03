@@ -1,8 +1,22 @@
 on:
   workflow_call:
     inputs:
-      make_target:
+      discussionCategory:
+        description: The discussion category to use for release discussions
+        type: string
         required: false
+      makeTarget:
+        description: The make target to run before publishing the release
+        required: false
+        type: string
+      releaseActionVersion:
+        description: The version of the release action to use
+        required: false
+        type: string
+        default: v4
+      tag:
+        description: The tag to publish the release from
+        required: true
         type: string
 
 jobs:
@@ -10,15 +24,33 @@ jobs:
     runs-on: ubuntu-latest
     name: Publish release
 
+    permissions:
+      contents: write
+      discussions: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: refs/tags/${{ github.event.inputs.tag }}
+
+      - name: Check if tag is SemVer
+        id: checkTag
+        run: |
+          if [[ "${{ github.event.inputs.tag }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo isSemVer=true >> $GITHUB_OUTPUT
+            echo "Tag is SemVer"
+          else
+            echo "Tag is not SemVer"
+          fi
 
       - name: Make
-        if: ${{ inputs.make_target }}
-        run: make ${{ inputs.make_target }}
+        if: ${{ inputs.makeTarget }}
+        run: make ${{ inputs.makeTarget }}
 
       - name: Publish release
-        uses: ghalactic/github-release-from-tag@v4
+        uses: ghalactic/github-release-from-tag@${{ inputs.releaseActionVersion }}
         with:
           reactions: hooray,heart,rocket
+          discussionCategory: ${{ steps.checkTag.outputs.isSemVer == 'true' && inputs.discussionCategory || '' }}
+          discussionReactions: ${{ (inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}

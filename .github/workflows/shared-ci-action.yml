@@ -1,7 +1,7 @@
 on:
   workflow_call:
     inputs:
-      is_scheduled:
+      isScheduled:
         description: Whether this CI workflow run is scheduled
         type: boolean
         required: false
@@ -19,14 +19,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "16"
 
       - name: Install dependencies
         run: make link-dependencies
 
       - name: Make
         run: make ci
+        env:
+          FIXTURES_GITHUB_TOKEN: ${{ secrets.FIXTURES_GITHUB_TOKEN }}
 
       - name: Publish coverage
-        if: ${{ !inputs.is_scheduled }}
+        if: ${{ !inputs.isScheduled }}
         uses: codecov/codecov-action@v3

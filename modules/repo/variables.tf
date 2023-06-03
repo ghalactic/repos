@@ -48,7 +48,7 @@ variable "ci_workflows" {
   default     = []
 }
 
-variable "publish_release_workflow" {
+variable "has_publish_release_workflow" {
   description = "Whether to add a basic GitHub Actions release publishing workflow"
   type        = bool
   default     = true
@@ -64,4 +64,22 @@ variable "has_discussions" {
   description = "Whether the repository has discussions"
   type        = bool
   default     = false
+}
+
+variable "has_release_discussions" {
+  description = "Whether the repository has release discussions"
+  type        = bool
+  default     = false
+}
+
+variable "release_make_target" {
+  description = "The make target to run before publishing releases"
+  type        = string
+  default     = null
+}
+
+variable "release_action_version" {
+  description = "The release action version to use when publishing releases"
+  type        = string
+  default     = null
 }
