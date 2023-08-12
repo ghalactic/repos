@@ -20,3 +20,11 @@ module "repo_org_dot_github_dot_io" {
 
   has_publish_release_workflow = false
 }
+
+module "repo_renovate" {
+  source      = "./modules/repo"
+  name        = "renovate"
+  description = "Self-hosted Renovate for Ghalactic"
+
+  has_publish_release_workflow = false
+}
