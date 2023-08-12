@@ -12,6 +12,7 @@ resource "github_repository" "this" {
   has_discussions = var.has_discussions
   has_projects    = false
   has_wiki        = false
+  has_issues      = true
 
   delete_branch_on_merge = true
   vulnerability_alerts   = true
