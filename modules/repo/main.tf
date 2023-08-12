@@ -14,7 +14,7 @@ resource "github_repository" "this" {
   has_wiki        = false
   has_issues      = true
 
-  allow_auto_merge       = true
+  allow_auto_merge       = false
   delete_branch_on_merge = true
   vulnerability_alerts   = true
 
