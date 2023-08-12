@@ -27,4 +27,5 @@ module "repo_renovate" {
   homepage_url = "https://github.com/ghalactic/renovate/actions/workflows/renovate.yml"
 
   has_publish_release_workflow = false
+  manage_renovate              = false
 }

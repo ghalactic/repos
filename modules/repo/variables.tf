@@ -54,6 +54,12 @@ variable "has_publish_release_workflow" {
   default     = true
 }
 
+variable "manage_renovate" {
+  description = "Whether to manage the Renovate configuration"
+  type        = bool
+  default     = true
+}
+
 variable "renovate_post_upgrade_command" {
   description = "The Renovate post-upgrade command to use"
   type        = string

@@ -1,5 +1,5 @@
 resource "github_repository_file" "dot_github_renovate_json" {
-  count = 1
+  count = var.manage_renovate ? 1 : 0
 
   commit_author       = module.constants.committer.name
   commit_email        = module.constants.committer.email
