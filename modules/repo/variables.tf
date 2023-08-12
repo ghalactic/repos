@@ -54,6 +54,12 @@ variable "has_publish_release_workflow" {
   default     = true
 }
 
+variable "renovate_post_upgrade_command" {
+  description = "The Renovate post-upgrade command to use"
+  type        = string
+  default     = null
+}
+
 variable "dependabot_ecosystems" {
   description = "The Dependabot ecosystems to use"
   type        = list(string)

@@ -1,0 +1,7 @@
+{
+  "description": "DO NOT EDIT - This file is managed by ${ org }/repos.",
+  "extends": ["github>${ org }/renovate"],
+  "postUpgradeTasks": {
+    "commands": [%{ if post_upgrade_command != null }"${ post_upgrade_command }"%{ endif }]
+  }
+}

@@ -12,8 +12,9 @@ module "repo_github_release_from_tag" {
     "release-automation",
   ]
 
-  ci_workflows           = ["action"]
-  release_action_version = "main"
+  ci_workflows                  = ["action"]
+  release_action_version        = "main"
+  renovate_post_upgrade_command = "npm run renovate-post-update"
 
   has_discussions         = true
   has_release_discussions = true
@@ -32,7 +33,8 @@ module "repo_dependabot_automation" {
     "automation",
   ]
 
-  ci_workflows = ["action"]
+  ci_workflows                  = ["action"]
+  renovate_post_upgrade_command = "npm run renovate-post-update"
 
   has_discussions = true
 
