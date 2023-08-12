@@ -22,9 +22,10 @@ module "repo_org_dot_github_dot_io" {
 }
 
 module "repo_renovate" {
-  source      = "./modules/repo"
-  name        = "renovate"
-  description = "Self-hosted Renovate for Ghalactic"
+  source       = "./modules/repo"
+  name         = "renovate"
+  description  = "Self-hosted Renovate for Ghalactic"
+  homepage_url = "https://github.com/ghalactic/renovate/actions/workflows/renovate.yml"
 
   has_publish_release_workflow = false
 }
