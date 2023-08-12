@@ -7,7 +7,6 @@ module "repo_branding" {
   pages_branch = "gh-pages"
 
   has_publish_release_workflow = false
-  dependabot_ecosystems        = ["github-actions", "npm"]
 }
 
 module "repo_org_dot_github_dot_io" {

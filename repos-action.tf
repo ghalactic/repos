@@ -13,7 +13,6 @@ module "repo_github_release_from_tag" {
   ]
 
   ci_workflows           = ["action"]
-  dependabot_ecosystems  = []
   release_action_version = "main"
 
   has_discussions         = true
@@ -33,8 +32,7 @@ module "repo_dependabot_automation" {
     "automation",
   ]
 
-  ci_workflows          = ["action"]
-  dependabot_ecosystems = ["github-actions", "npm"]
+  ci_workflows = ["action"]
 
   has_discussions = true
 

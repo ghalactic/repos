@@ -3,8 +3,7 @@ module "repo_action_template" {
   name        = "action-template"
   description = "A template repo for creating GitHub Actions"
 
-  ci_workflows          = ["action"]
-  dependabot_ecosystems = ["github-actions", "npm"]
+  ci_workflows = ["action"]
 
   is_template = true
 }
