@@ -19,6 +19,13 @@ resource "github_issue_label" "npm" {
   color       = "0366D6"
 }
 
+resource "github_issue_label" "terraform" {
+  repository  = github_repository.this.name
+  name        = "terraform"
+  description = "Pull requests that update Terraform dependencies"
+  color       = "0366D6"
+}
+
 resource "github_issue_label" "major" {
   repository  = github_repository.this.name
   name        = "major"
