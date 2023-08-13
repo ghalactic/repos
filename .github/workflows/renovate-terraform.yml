@@ -165,6 +165,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
+          gh pr comment \
+            --repo "$GITHUB_REPOSITORY" \
+            --body 'Looks like the Terraform plan has no changes, so this PR will be merged automatically.' \
+            '${{ needs.collect_details.outputs.pr_number }}'
           gh pr merge \
             --repo "$GITHUB_REPOSITORY" \
             --match-head-commit '${{ needs.collect_details.outputs.commit_sha }}' \
