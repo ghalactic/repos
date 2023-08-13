@@ -2,13 +2,13 @@ name: Renovate Terraform
 
 on: status
 
+env:
+  RENOVATE_USERNAME: ezzatron
+
 jobs:
   collect_details:
     name: Collect details
     runs-on: ubuntu-latest
-
-    env:
-      RENOVATE_USERNAME: ezzatron
 
     outputs:
       branch: ${{ steps.event.outputs.branch }}
