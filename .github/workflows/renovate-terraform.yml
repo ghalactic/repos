@@ -61,7 +61,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          export PR=$(gh pr list --repo '$GITHUB_REPOSITORY' --author '${{ vars.RENOVATE_USERNAME }}' --json author,mergeable,number,state --search '${{ steps.event.outputs.commit_sha }}')
+          export PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --author '${{ vars.RENOVATE_USERNAME }}' --json author,mergeable,number,state --search '${{ steps.event.outputs.commit_sha }}')
 
           echo "pr_author=$(echo $PR | jq -r '.[0].author.login')" >> $GITHUB_OUTPUT
           echo "pr_author: $(echo $PR | jq -r '.[0].author.login')"
