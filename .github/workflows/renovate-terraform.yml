@@ -32,28 +32,28 @@ jobs:
       - name: Event details
         id: event
         run: |
-          echo "::set-output name=branch::${{ github.event.branches[0].name }}"
+          echo "branch=${{ github.event.branches[0].name }}" >> $GITHUB_OUTPUT
           echo "branch: ${{ github.event.branches[0].name }}"
 
-          echo "::set-output name=commit_author::${{ github.event.commit.author.login }}"
+          echo "commit_author=${{ github.event.commit.author.login }}" >> $GITHUB_OUTPUT
           echo "commit_author: ${{ github.event.author.login }}"
 
-          echo "::set-output name=commit_sha::${{ github.event.sha }}"
+          echo "commit_sha=${{ github.event.sha }}" >> $GITHUB_OUTPUT
           echo "commit_sha: ${{ github.event.sha }}"
 
-          echo "::set-output name=context::${{ github.event.context }}"
+          echo "context=${{ github.event.context }}" >> $GITHUB_OUTPUT
           echo "context: ${{ github.event.context }}"
 
-          echo "::set-output name=description::${{ github.event.description }}"
+          echo "description=${{ github.event.description }}" >> $GITHUB_OUTPUT
           echo "description: ${{ github.event.description }}"
 
-          echo "::set-output name=sender::${{ github.event.sender.login }}"
+          echo "sender=${{ github.event.sender.login }}" >> $GITHUB_OUTPUT
           echo "sender: ${{ github.event.sender.login }}"
 
-          echo "::set-output name=state::${{ github.event.state }}"
+          echo "state=${{ github.event.state }}" >> $GITHUB_OUTPUT
           echo "state: ${{ github.event.state }}"
 
-          echo "::set-output name=verified::${{ github.event.commit.commit.verification.verified }}"
+          echo "verified=${{ github.event.commit.commit.verification.verified }}" >> $GITHUB_OUTPUT
           echo "verified: ${{ github.event.commit.commit.verification.verified }}"
 
       - name: Pull request details
@@ -61,21 +61,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          export PR=$(gh pr list --json author,mergeable,number,state --search '${{ steps.event.outputs.commit_sha }}'
+          export PR=$(gh pr list --json author,mergeable,number,state --search '${{ steps.event.outputs.commit_sha }}')
 
-          echo "::set-output name=pr_author::$(echo $PR | jq -r '.[0].author.login')"
+          echo "pr_author=$(echo $PR | jq -r '.[0].author.login')" >> $GITHUB_OUTPUT
           echo "pr_author: $(echo $PR | jq -r '.[0].author.login')"
 
-          echo "::set-output name=pr_author_is_bot::$(echo $PR | jq -r '.[0].author.is_bot')"
+          echo "pr_author_is_bot=$(echo $PR | jq -r '.[0].author.is_bot')" >> $GITHUB_OUTPUT
           echo "pr_author_is_bot: $(echo $PR | jq -r '.[0].author.is_bot')"
 
-          echo "::set-output name=pr_mergeable::$(echo $PR | jq -r '.[0].mergeable')"
+          echo "pr_mergeable=$(echo $PR | jq -r '.[0].mergeable')" >> $GITHUB_OUTPUT
           echo "pr_mergeable: $(echo $PR | jq -r '.[0].mergeable')"
 
-          echo "::set-output name=pr_number::$(echo $PR | jq -r '.[0].number')"
+          echo "pr_number=$(echo $PR | jq -r '.[0].number')" >> $GITHUB_OUTPUT
           echo "pr_number: $(echo $PR | jq -r '.[0].number')"
 
-          echo "::set-output name=pr_state::$(echo $PR | jq -r '.[0].state')"
+          echo "pr_state=$(echo $PR | jq -r '.[0].state')" >> $GITHUB_OUTPUT
           echo "pr_state: $(echo $PR | jq -r '.[0].state')"
 
   automerge:
