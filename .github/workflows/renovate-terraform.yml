@@ -17,7 +17,7 @@ jobs:
       pr_is_draft: ${{ steps.pr.outputs.pr_is_draft }}
       pr_mergeable: ${{ steps.pr.outputs.pr_mergeable }}
       pr_number: ${{ steps.pr.outputs.pr_number }}
-      sender: ${{ steps.event.outputs.sender.login }}
+      sender: ${{ steps.event.outputs.sender }}
       state: ${{ steps.event.outputs.state }}
       verified: ${{ steps.event.outputs.verified }}
 
@@ -111,8 +111,8 @@ jobs:
             steps.analyze_details.outputs.verified == 'true'
           }}" >> $GITHUB_OUTPUT
 
-  output_details:
-    name: Output details
+  output_analysis:
+    name: Output analysis
     runs-on: ubuntu-latest
 
     needs:
