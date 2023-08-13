@@ -13,7 +13,6 @@ jobs:
       commit_sha: ${{ steps.event.outputs.commit_sha }}
       context: ${{ steps.event.outputs.context }}
       description: ${{ steps.event.outputs.description }}
-      pr_author: ${{ steps.pr.outputs.pr_author }}
       pr_is_draft: ${{ steps.pr.outputs.pr_is_draft }}
       pr_mergeable: ${{ steps.pr.outputs.pr_mergeable }}
       pr_number: ${{ steps.pr.outputs.pr_number }}
@@ -44,7 +43,7 @@ jobs:
       - name: Pull request details
         if: >-
           startsWith(steps.event.outputs.branch, 'renovate/') &&
-          steps.event.outputs.commit_author == vars.RENOVATE_USERNAME &&
+          steps.event.outputs.commit_author == 'ghalactic-renovate[bot]' &&
           steps.event.outputs.context == 'Terraform Cloud/ghalactic/repos' &&
           steps.event.outputs.description == 'Terraform plan has no changes' &&
           steps.event.outputs.sender == 'terraform-cloud[bot]' &&
@@ -57,13 +56,12 @@ jobs:
           PR=$(
             gh pr list \
               --repo "$GITHUB_REPOSITORY" \
-              --author '${{ vars.RENOVATE_USERNAME }}' \
+              --author app/ghalactic-renovate \
               --state OPEN \
               --json author,isDraft,mergeable,number \
               --search '${{ steps.event.outputs.commit_sha }}'
           )
 
-          echo "pr_author=$(echo $PR | jq -r '.[0].author.login')" >> $GITHUB_OUTPUT
           echo "pr_is_draft=$(echo $PR | jq -r '.[0].isDraft')" >> $GITHUB_OUTPUT
           echo "pr_mergeable=$(echo $PR | jq -r '.[0].mergeable')" >> $GITHUB_OUTPUT
           echo "pr_number=$(echo $PR | jq -r '.[0].number')" >> $GITHUB_OUTPUT
@@ -79,7 +77,6 @@ jobs:
       commit_author: ${{ steps.analyze_details.outputs.commit_author }}
       context: ${{ steps.analyze_details.outputs.context }}
       description: ${{ steps.analyze_details.outputs.description }}
-      pr_author: ${{ steps.analyze_details.outputs.pr_author }}
       pr_is_draft: ${{ steps.analyze_details.outputs.pr_is_draft }}
       pr_mergeable: ${{ steps.analyze_details.outputs.pr_mergeable }}
       sender: ${{ steps.analyze_details.outputs.sender }}
@@ -92,10 +89,9 @@ jobs:
         id: analyze_details
         run: |
           echo "branch=${{ startsWith(needs.collect_details.outputs.branch, 'renovate/') }}" >> $GITHUB_OUTPUT
-          echo "commit_author=${{ needs.collect_details.outputs.commit_author == vars.RENOVATE_USERNAME }}" >> $GITHUB_OUTPUT
+          echo "commit_author=${{ needs.collect_details.outputs.commit_author == 'ghalactic-renovate[bot]' }}" >> $GITHUB_OUTPUT
           echo "context=${{ needs.collect_details.outputs.context == 'Terraform Cloud/ghalactic/repos' }}" >> $GITHUB_OUTPUT
           echo "description=${{ needs.collect_details.outputs.description == 'Terraform plan has no changes' }}" >> $GITHUB_OUTPUT
-          echo "pr_author=${{ needs.collect_details.outputs.pr_author == vars.RENOVATE_USERNAME }}" >> $GITHUB_OUTPUT
           echo "pr_is_draft=${{ needs.collect_details.outputs.pr_is_draft == 'false' }}" >> $GITHUB_OUTPUT
           echo "pr_mergeable=${{ needs.collect_details.outputs.pr_mergeable == 'MERGEABLE' }}" >> $GITHUB_OUTPUT
           echo "sender=${{ needs.collect_details.outputs.sender == 'terraform-cloud[bot]' }}" >> $GITHUB_OUTPUT
@@ -110,7 +106,6 @@ jobs:
             steps.analyze_details.outputs.commit_author == 'true' &&
             steps.analyze_details.outputs.context == 'true' &&
             steps.analyze_details.outputs.description == 'true' &&
-            steps.analyze_details.outputs.pr_author == 'true' &&
             steps.analyze_details.outputs.pr_is_draft == 'true' &&
             steps.analyze_details.outputs.pr_mergeable == 'true' &&
             steps.analyze_details.outputs.sender == 'true' &&
