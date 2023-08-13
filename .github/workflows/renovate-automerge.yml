@@ -1,9 +1,0 @@
-on: status
-
-jobs:
-  automerge:
-    name: Renovate auto-merge
-    runs-on: ubuntu-latest
-
-    steps:
-      - run: echo '${{ toJSON(github.event) }}'
