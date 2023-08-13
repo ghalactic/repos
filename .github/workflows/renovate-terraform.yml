@@ -54,7 +54,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --author '${{ vars.RENOVATE_USERNAME }}' --state OPEN --json author,isDraft,mergeable,number --search '${{ steps.event.outputs.commit_sha }}')
+          PR=$(
+            gh pr list \
+              --repo "$GITHUB_REPOSITORY" \
+              --author '${{ vars.RENOVATE_USERNAME }}' \
+              --state OPEN \
+              --json author,isDraft,mergeable,number \
+              --search '${{ steps.event.outputs.commit_sha }}'
+          )
 
           echo "pr_author=$(echo $PR | jq -r '.[0].author.login')" >> $GITHUB_OUTPUT
           echo "pr_is_draft=$(echo $PR | jq -r '.[0].isDraft')" >> $GITHUB_OUTPUT
@@ -95,7 +102,7 @@ jobs:
           echo "state=${{ needs.collect_details.outputs.state == 'success' }}" >> $GITHUB_OUTPUT
           echo "verified=${{ needs.collect_details.outputs.verified == 'true' }}" >> $GITHUB_OUTPUT
 
-      - name: Analyze auto merge
+      - name: Analyze auto-merge
         id: analyze_auto_merge
         run: |
           echo "should_merge=${{
@@ -140,10 +147,26 @@ jobs:
     name: Auto-merge
     runs-on: ubuntu-latest
 
-    needs: analyze_details
+    needs:
+      - collect_details
+      - analyze_details
+
     if: needs.analyze_details.outputs.should_merge == 'true'
 
     steps:
-      - name: Merge pull request
+      - name: Obtain token
+        id: token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.RENOVATE_APP_ID }}
+          private_key: ${{ secrets.RENOVATE_APP_PK }}
+
+      - name: Merge
+        env:
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          echo 'Auto-merging PR #${{ needs.collect_details.outputs.pr_number }}'
+          gh pr merge \
+            --repo "$GITHUB_REPOSITORY" \
+            --match-head-commit '${{ needs.collect_details.outputs.commit_sha }}' \
+            --delete-branch \
+            '${{ needs.collect_details.outputs.pr_number }}'
