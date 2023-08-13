@@ -99,4 +99,4 @@ jobs:
 
     steps:
       - run: |
-        echo 'Auto-merging PR #${{ needs.collect_details.outputs.pr_number }}'
+          echo 'Auto-merging PR #${{ needs.collect_details.outputs.pr_number }}'
