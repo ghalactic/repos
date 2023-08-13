@@ -13,6 +13,7 @@ jobs:
       context: ${{ steps.event.outputs.context }}
       description: ${{ steps.event.outputs.description }}
       pr_author: ${{ steps.pr.outputs.pr_author }}
+      pr_is_draft: ${{ steps.pr.outputs.pr_is_draft }}
       pr_mergeable: ${{ steps.pr.outputs.pr_mergeable }}
       pr_number: ${{ steps.pr.outputs.pr_number }}
       sender: ${{ steps.event.outputs.sender.login }}
@@ -67,10 +68,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          export PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --author '${{ vars.RENOVATE_USERNAME }}' --state OPEN --json author,mergeable,number --search '${{ steps.event.outputs.commit_sha }}')
+          export PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --author '${{ vars.RENOVATE_USERNAME }}' --state OPEN --json author,isDraft,mergeable,number --search '${{ steps.event.outputs.commit_sha }}')
 
           echo "pr_author=$(echo $PR | jq -r '.[0].author.login')" >> $GITHUB_OUTPUT
           echo "pr_author: $(echo $PR | jq -r '.[0].author.login')"
+
+          echo "pr_is_draft=$(echo $PR | jq -r '.[0].isDraft')" >> $GITHUB_OUTPUT
+          echo "pr_is_draft: $(echo $PR | jq -r '.[0].isDraft')"
 
           echo "pr_mergeable=$(echo $PR | jq -r '.[0].mergeable')" >> $GITHUB_OUTPUT
           echo "pr_mergeable: $(echo $PR | jq -r '.[0].mergeable')"
@@ -90,6 +94,7 @@ jobs:
       needs.collect_details.outputs.context == 'Terraform Cloud/ghalactic/repos' &&
       needs.collect_details.outputs.description == 'Terraform plan has no changes' &&
       needs.collect_details.outputs.pr_author == vars.RENOVATE_USERNAME &&
+      needs.collect_details.outputs.pr_is_draft == 'false' &&
       needs.collect_details.outputs.pr_mergeable == 'MERGEABLE' &&
       needs.collect_details.outputs.sender == 'terraform-cloud[bot]' &&
       needs.collect_details.outputs.state == 'success' &&
