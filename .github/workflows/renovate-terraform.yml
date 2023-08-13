@@ -70,18 +70,18 @@ jobs:
     steps:
       - name: Output details
         run: |
-          echo ::notice title=branch::${{ needs.collect_details.outputs.branch }}
-          echo ::notice title=commit_author::${{ needs.collect_details.outputs.commit_author }}
-          echo ::notice title=commit_sha::${{ needs.collect_details.outputs.commit_author }}
-          echo ::notice title=context::${{ needs.collect_details.outputs.context }}
-          echo ::notice title=description::${{ needs.collect_details.outputs.description }}
-          echo ::notice title=pr_author::${{ needs.collect_details.outputs.pr_author }}
-          echo ::notice title=pr_is_draft::${{ needs.collect_details.outputs.pr_is_draft }}
-          echo ::notice title=pr_mergeable::${{ needs.collect_details.outputs.pr_mergeable }}
-          echo ::notice title=pr_number::${{ needs.collect_details.outputs.pr_number }}
-          echo ::notice title=sender::${{ needs.collect_details.outputs.sender.login }}
-          echo ::notice title=state::${{ needs.collect_details.outputs.state }}
-          echo ::notice title=verified::${{ needs.collect_details.outputs.verified }}
+          echo ::notice title=branch::${{ needs.collect_details.outputs.branch || 'null' }}
+          echo ::notice title=commit_author::${{ needs.collect_details.outputs.commit_author || 'null' }}
+          echo ::notice title=commit_sha::${{ needs.collect_details.outputs.commit_sha || 'null' }}
+          echo ::notice title=context::${{ needs.collect_details.outputs.context || 'null' }}
+          echo ::notice title=description::${{ needs.collect_details.outputs.description || 'null' }}
+          echo ::notice title=pr_author::${{ needs.collect_details.outputs.pr_author || 'null' }}
+          echo ::notice title=pr_is_draft::${{ needs.collect_details.outputs.pr_is_draft || 'null' }}
+          echo ::notice title=pr_mergeable::${{ needs.collect_details.outputs.pr_mergeable || 'null' }}
+          echo ::notice title=pr_number::${{ needs.collect_details.outputs.pr_number || 'null' }}
+          echo ::notice title=sender::${{ needs.collect_details.outputs.sender.login || 'null' }}
+          echo ::notice title=state::${{ needs.collect_details.outputs.state || 'null' }}
+          echo ::notice title=verified::${{ needs.collect_details.outputs.verified || 'null' }}
 
   automerge:
     name: Auto-merge
