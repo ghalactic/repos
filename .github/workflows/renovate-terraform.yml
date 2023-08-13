@@ -113,8 +113,8 @@ jobs:
             steps.analyze_details.outputs.verified == 'true'
           }}" >> $GITHUB_OUTPUT
 
-  create_summary:
-    name: Create summary
+  analyze_auto_merge:
+    name: Renovate Terraform auto-merge analysis
     runs-on: ubuntu-latest
 
     needs:
