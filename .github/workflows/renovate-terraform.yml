@@ -78,7 +78,7 @@ jobs:
       sender: ${{ steps.analyze_details.outputs.sender }}
       state: ${{ steps.analyze_details.outputs.state }}
       verified: ${{ steps.analyze_details.outputs.verified }}
-      result: ${{ steps.analyze_result.outputs.result }}
+      should_merge: ${{ steps.analyze_auto_merge.outputs.should_merge }}
 
     steps:
       - name: Analyze details
@@ -95,10 +95,10 @@ jobs:
           echo "state=${{ needs.collect_details.outputs.state == 'success' }}" >> $GITHUB_OUTPUT
           echo "verified=${{ needs.collect_details.outputs.verified == 'true' }}" >> $GITHUB_OUTPUT
 
-      - name: Analyze result
-        id: analyze_result
+      - name: Analyze auto merge
+        id: analyze_auto_merge
         run: |
-          echo "result=${{
+          echo "should_merge=${{
             steps.analyze_details.outputs.branch == 'true' &&
             steps.analyze_details.outputs.commit_author == 'true' &&
             steps.analyze_details.outputs.context == 'true' &&
@@ -141,7 +141,7 @@ jobs:
     runs-on: ubuntu-latest
 
     needs: analyze_details
-    if: needs.analyze_details.outputs.result == 'true'
+    if: needs.analyze_details.outputs.should_merge == 'true'
 
     steps:
       - name: Merge pull request
