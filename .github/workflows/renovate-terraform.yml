@@ -172,5 +172,6 @@ jobs:
           gh pr merge \
             --repo "$GITHUB_REPOSITORY" \
             --match-head-commit '${{ needs.collect_details.outputs.commit_sha }}' \
+            --merge \
             --delete-branch \
             '${{ needs.collect_details.outputs.pr_number }}'
