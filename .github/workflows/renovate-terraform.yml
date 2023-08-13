@@ -70,18 +70,18 @@ jobs:
     steps:
       - name: Output details
         run: |
-          branch: ${{ needs.collect_details.outputs.branch }}
-          commit_author: ${{ needs.collect_details.outputs.commit_author }}
-          commit_sha: ${{ needs.collect_details.outputs.commit_author }}
-          context: ${{ needs.collect_details.outputs.context }}
-          description: ${{ needs.collect_details.outputs.description }}
-          pr_author: ${{ needs.collect_details.outputs.pr_author }}
-          pr_is_draft: ${{ needs.collect_details.outputs.pr_is_draft }}
-          pr_mergeable: ${{ needs.collect_details.outputs.pr_mergeable }}
-          pr_number: ${{ needs.collect_details.outputs.pr_number }}
-          sender: ${{ needs.collect_details.outputs.sender.login }}
-          state: ${{ needs.collect_details.outputs.state }}
-          verified: ${{ needs.collect_details.outputs.verified }}
+          echo ::notice title=branch::${{ needs.collect_details.outputs.branch }}
+          echo ::notice title=commit_author::${{ needs.collect_details.outputs.commit_author }}
+          echo ::notice title=commit_sha::${{ needs.collect_details.outputs.commit_author }}
+          echo ::notice title=context::${{ needs.collect_details.outputs.context }}
+          echo ::notice title=description::${{ needs.collect_details.outputs.description }}
+          echo ::notice title=pr_author::${{ needs.collect_details.outputs.pr_author }}
+          echo ::notice title=pr_is_draft::${{ needs.collect_details.outputs.pr_is_draft }}
+          echo ::notice title=pr_mergeable::${{ needs.collect_details.outputs.pr_mergeable }}
+          echo ::notice title=pr_number::${{ needs.collect_details.outputs.pr_number }}
+          echo ::notice title=sender::${{ needs.collect_details.outputs.sender.login }}
+          echo ::notice title=state::${{ needs.collect_details.outputs.state }}
+          echo ::notice title=verified::${{ needs.collect_details.outputs.verified }}
 
   automerge:
     name: Auto-merge
