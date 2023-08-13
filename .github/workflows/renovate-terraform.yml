@@ -134,15 +134,15 @@ jobs:
           echo '| Field | Match | Wanted | Got |' >> $GITHUB_STEP_SUMMARY
           echo '| :-- | :--: | :-- | :-- |' >> $GITHUB_STEP_SUMMARY
 
-          echo '| Branch | ${{ needs.analyze_details.outputs.branch == 'true' && '✅' || '❌' }} | Starts with `renovate/` | `${{ needs.collect_details.outputs.branch }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| Commit author | ${{ needs.analyze_details.outputs.commit_author == 'true'  && '✅' || '❌' }} | `ghalactic-renovate[bot]` | `${{ needs.collect_details.outputs.commit_author }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| Context | ${{ needs.analyze_details.outputs.context == 'true'  && '✅' || '❌' }} | `Terraform Cloud/ghalactic/repos` | `${{ needs.collect_details.outputs.context }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| Description | ${{ needs.analyze_details.outputs.description == 'true'  && '✅' || '❌' }} | `Terraform plan has no changes` | `${{ needs.collect_details.outputs.description }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| PR is draft | ${{ needs.analyze_details.outputs.pr_is_draft == 'true'  && '✅' || '❌' }} | `false` | `${{ needs.collect_details.outputs.pr_is_draft }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| PR mergeable | ${{ needs.analyze_details.outputs.pr_mergeable == 'true'  && '✅' || '❌' }} | `MERGEABLE` | `${{ needs.collect_details.outputs.pr_mergeable }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| Sender | ${{ needs.analyze_details.outputs.sender == 'true'  && '✅' || '❌' }} | `terraform-cloud[bot]` | `${{ needs.collect_details.outputs.sender }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| State | ${{ needs.analyze_details.outputs.state == 'true'  && '✅' || '❌' }} | `success` | `${{ needs.collect_details.outputs.state }}` |' >> $GITHUB_STEP_SUMMARY
-          echo '| Verified | ${{ needs.analyze_details.outputs.verified == 'true'  && '✅' || '❌' }} | `true` | `${{ needs.collect_details.outputs.verified }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| Branch | ${{ needs.analyze_details.outputs.branch == 'true' && '✅' || '❌' }} | Starts with `renovate/` | `${{ needs.collect_details.outputs.branch || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| Commit author | ${{ needs.analyze_details.outputs.commit_author == 'true'  && '✅' || '❌' }} | `ghalactic-renovate[bot]` | `${{ needs.collect_details.outputs.commit_author || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| Context | ${{ needs.analyze_details.outputs.context == 'true'  && '✅' || '❌' }} | `Terraform Cloud/ghalactic/repos` | `${{ needs.collect_details.outputs.context || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| Description | ${{ needs.analyze_details.outputs.description == 'true'  && '✅' || '❌' }} | `Terraform plan has no changes` | `${{ needs.collect_details.outputs.description || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| PR is draft | ${{ needs.analyze_details.outputs.pr_is_draft == 'true'  && '✅' || '❌' }} | `false` | `${{ needs.collect_details.outputs.pr_is_draft || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| PR mergeable | ${{ needs.analyze_details.outputs.pr_mergeable == 'true'  && '✅' || '❌' }} | `MERGEABLE` | `${{ needs.collect_details.outputs.pr_mergeable || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| Sender | ${{ needs.analyze_details.outputs.sender == 'true'  && '✅' || '❌' }} | `terraform-cloud[bot]` | `${{ needs.collect_details.outputs.sender || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| State | ${{ needs.analyze_details.outputs.state == 'true'  && '✅' || '❌' }} | `success` | `${{ needs.collect_details.outputs.state || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| Verified | ${{ needs.analyze_details.outputs.verified == 'true'  && '✅' || '❌' }} | `true` | `${{ needs.collect_details.outputs.verified || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
 
   automerge:
     name: Auto-merge
