@@ -115,7 +115,9 @@ jobs:
     name: Output details
     runs-on: ubuntu-latest
 
-    needs: analyze_details
+    needs:
+      - collect_details
+      - analyze_details
 
     steps:
       - name: Output details
