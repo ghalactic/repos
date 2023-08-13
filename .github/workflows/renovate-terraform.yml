@@ -54,7 +54,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}
         run: |
-          export PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --author '${{ vars.RENOVATE_USERNAME }}' --state OPEN --json author,isDraft,mergeable,number --search '${{ steps.event.outputs.commit_sha }}')
+          PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --author '${{ vars.RENOVATE_USERNAME }}' --state OPEN --json author,isDraft,mergeable,number --search '${{ steps.event.outputs.commit_sha }}')
 
           echo "pr_author=$(echo $PR | jq -r '.[0].author.login')" >> $GITHUB_OUTPUT
           echo "pr_is_draft=$(echo $PR | jq -r '.[0].isDraft')" >> $GITHUB_OUTPUT
@@ -69,7 +69,12 @@ jobs:
 
     steps:
       - name: Output details
-        run: echo ::notice title=details::${{ toJson(needs.collect_details.outputs) }}
+        run: |
+          DETAILS='${{ toJson(needs.collect_details.outputs) }}'
+          DETAILS="${DETAILS//'%'/'%25'}"
+          DETAILS="${DETAILS//$'\n'/'%0A'}"
+          DETAILS="${DETAILS//$'\r'/'%0D'}"
+          echo ::notice title=details::$DETAILS
 
   automerge:
     name: Auto-merge
