@@ -43,13 +43,13 @@ resource "github_issue_label" "non_major" {
 resource "github_issue_label" "non_dev" {
   repository  = github_repository.this.name
   name        = "non-dev"
-  description = "Pull requests that update non-dev dependency versions"
+  description = "Pull requests that update non-dev dependencies"
   color       = "D93F0B"
 }
 
 resource "github_issue_label" "dev" {
   repository  = github_repository.this.name
   name        = "dev"
-  description = "Pull requests that update dev dependency versions"
+  description = "Pull requests that update dev dependencies"
   color       = "168700"
 }
