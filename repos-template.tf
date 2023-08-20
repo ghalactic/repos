@@ -4,7 +4,7 @@ module "repo_action_template" {
   description = "A template repo for creating GitHub Actions"
 
   ci_workflows                  = ["action"]
-  renovate_post_upgrade_command = "npm run renovate-post-update"
+  renovate_post_upgrade_command = "npm run renovate-post-upgrade"
 
   is_template = true
 }
