@@ -43,11 +43,11 @@ resource "github_repository_file" "dot_github_workflows_publish_release_yml" {
   overwrite_on_create = true
 
   content = templatefile("dot-github/workflows/publish-release.yml", {
-    discussion_category    = var.has_release_discussions ? "Releases" : ""
-    make_target            = var.release_make_target == null ? "" : var.release_make_target
-    org                    = module.constants.org
-    org_name               = module.constants.org_name
-    release_action_version = var.release_action_version == null ? "" : var.release_action_version
+    discussion_category     = var.has_release_discussions ? "Releases" : ""
+    make_target             = var.release_make_target == null ? "" : var.release_make_target
+    org                     = module.constants.org
+    org_name                = module.constants.org_name
+    use_release_action_main = var.use_release_action_main
   })
 }
 
@@ -62,10 +62,10 @@ resource "github_repository_file" "dot_github_workflows_publish_release_manual_y
   overwrite_on_create = true
 
   content = templatefile("dot-github/workflows/publish-release-manual.yml", {
-    discussion_category    = var.has_release_discussions ? "Releases" : ""
-    make_target            = var.release_make_target == null ? "" : var.release_make_target
-    org                    = module.constants.org
-    org_name               = module.constants.org_name
-    release_action_version = var.release_action_version == null ? "" : var.release_action_version
+    discussion_category     = var.has_release_discussions ? "Releases" : ""
+    make_target             = var.release_make_target == null ? "" : var.release_make_target
+    org                     = module.constants.org
+    org_name                = module.constants.org_name
+    use_release_action_main = var.use_release_action_main
   })
 }

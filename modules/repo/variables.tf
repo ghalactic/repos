@@ -96,8 +96,8 @@ variable "release_make_target" {
   default     = null
 }
 
-variable "release_action_version" {
-  description = "The release action version to use when publishing releases"
-  type        = string
-  default     = null
+variable "use_release_action_main" {
+  description = "Use the main branch version of the release action when publishing releases"
+  type        = bool
+  default     = false
 }

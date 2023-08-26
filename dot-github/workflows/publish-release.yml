@@ -21,7 +21,7 @@ jobs:
 %{ if make_target != "" ~}
       makeTarget: ${ make_target }
 %{ endif ~}
-%{ if release_action_version != "" ~}
-      releaseActionVersion: ${ release_action_version }
+%{ if use_release_action_main ~}
+      useReleaseActionMain: true
 %{ endif ~}
       tag: ${"$"}{{ github.ref_name }}

@@ -13,7 +13,7 @@ module "repo_github_release_from_tag" {
   ]
 
   ci_workflows                  = ["action"]
-  release_action_version        = "main"
+  use_release_action_main       = true
   renovate_post_upgrade_command = "npm run renovate-post-upgrade"
 
   has_discussions         = true
