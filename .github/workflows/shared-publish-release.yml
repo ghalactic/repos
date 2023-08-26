@@ -45,12 +45,12 @@ jobs:
           fi
 
       - name: Make
-        if: ${{ inputs.makeTarget }}
-        run: make ${{ inputs.makeTarget }}
+        if: ${{ github.event.inputs.makeTarget }}
+        run: make ${{ github.event.inputs.makeTarget }}
 
       - name: Publish release
-        uses: ghalactic/github-release-from-tag@${{ inputs.releaseActionVersion }}
+        uses: ghalactic/github-release-from-tag@${{ github.event.inputs.releaseActionVersion }}
         with:
           reactions: hooray,heart,rocket
-          discussionCategory: ${{ steps.checkTag.outputs.isSemVer == 'true' && inputs.discussionCategory || '' }}
-          discussionReactions: ${{ (inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}
+          discussionCategory: ${{ steps.checkTag.outputs.isSemVer == 'true' && github.event.inputs.discussionCategory || '' }}
+          discussionReactions: ${{ (github.event.inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}
