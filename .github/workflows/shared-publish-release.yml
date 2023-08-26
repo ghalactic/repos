@@ -29,6 +29,9 @@ jobs:
       discussions: write
 
     steps:
+      - name: Debug
+        run: echo 'ref is refs/tags/${{ github.event.inputs.tag }}''
+
       - name: Checkout
         uses: actions/checkout@v3
         with:
