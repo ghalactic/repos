@@ -9,15 +9,15 @@ on:
         description: The make target to run before publishing the release
         required: false
         type: string
-      releaseActionVersion:
-        description: The version of the release action to use
-        required: false
-        type: string
-        default: v4
       tag:
         description: The tag to publish the release from
         required: true
         type: string
+      useReleaseActionMain:
+        description: Whether to use the main branch of the release action
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   publish:
@@ -48,8 +48,8 @@ jobs:
         if: ${{ github.event.inputs.makeTarget }}
         run: make ${{ github.event.inputs.makeTarget }}
 
-      - name: Publish release (v4)
-        if: github.event.inputs.releaseActionVersion == 'v4'
+      - name: Publish release
+        if: github.event.inputs.useReleaseActionMain != 'true'
         uses: ghalactic/github-release-from-tag@v4
         with:
           reactions: hooray,heart,rocket
@@ -57,7 +57,7 @@ jobs:
           discussionReactions: ${{ (github.event.inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}
 
       - name: Publish release (main)
-        if: github.event.inputs.releaseActionVersion == 'main'
+        if: github.event.inputs.useReleaseActionMain == 'true'
         uses: ghalactic/github-release-from-tag@main
         with:
           reactions: hooray,heart,rocket
