@@ -50,7 +50,7 @@ jobs:
 
       - name: Publish release
         if: github.event.inputs.useReleaseActionMain != 'true'
-        uses: ghalactic/github-release-from-tag@v4
+        uses: ghalactic/github-release-from-tag@v5
         with:
           reactions: hooray,heart,rocket
           discussionCategory: ${{ steps.checkTag.outputs.isSemVer == 'true' && github.event.inputs.discussionCategory || '' }}
