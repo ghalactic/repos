@@ -96,7 +96,7 @@ jobs:
           echo "context=${{ needs.collect_details.outputs.context == 'Terraform Cloud/ghalactic/repos' }}" >> $GITHUB_OUTPUT
           echo "description=${{ needs.collect_details.outputs.description == 'Terraform plan has no changes' }}" >> $GITHUB_OUTPUT
           echo "pr_is_draft=${{ needs.collect_details.outputs.pr_is_draft == 'false' }}" >> $GITHUB_OUTPUT
-          echo "pr_labels=${{ contains(fromJSON(needs.collect_details.outputs.pr_labels), 'renovate') && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'terraform') }}" >> $GITHUB_OUTPUT
+          echo "pr_labels=${{ needs.collect_details.outputs.pr_labels && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'renovate') && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'terraform') }}" >> $GITHUB_OUTPUT
           echo "pr_mergeable=${{ needs.collect_details.outputs.pr_mergeable == 'MERGEABLE' }}" >> $GITHUB_OUTPUT
           echo "sender=${{ needs.collect_details.outputs.sender == 'terraform-cloud[bot]' }}" >> $GITHUB_OUTPUT
           echo "state=${{ needs.collect_details.outputs.state == 'success' }}" >> $GITHUB_OUTPUT
