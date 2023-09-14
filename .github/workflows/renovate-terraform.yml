@@ -14,6 +14,7 @@ jobs:
       context: ${{ steps.event.outputs.context }}
       description: ${{ steps.event.outputs.description }}
       pr_is_draft: ${{ steps.pr.outputs.pr_is_draft }}
+      pr_labels: ${{ steps.pr.outputs.pr_labels }}
       pr_mergeable: ${{ steps.pr.outputs.pr_mergeable }}
       pr_number: ${{ steps.pr.outputs.pr_number }}
       sender: ${{ steps.event.outputs.sender }}
@@ -58,11 +59,12 @@ jobs:
               --repo "$GITHUB_REPOSITORY" \
               --author app/ghalactic-renovate \
               --state OPEN \
-              --json author,isDraft,mergeable,number \
+              --json author,isDraft,labels,mergeable,number \
               --search '${{ steps.event.outputs.commit_sha }}'
           )
 
           echo "pr_is_draft=$(echo $PR | jq -r '.[0].isDraft')" >> $GITHUB_OUTPUT
+          echo "pr_labels=$(echo $PR | jq -c -r '.[0].labels | map(.name) | join(",")')" >> $GITHUB_OUTPUT
           echo "pr_mergeable=$(echo $PR | jq -r '.[0].mergeable')" >> $GITHUB_OUTPUT
           echo "pr_number=$(echo $PR | jq -r '.[0].number')" >> $GITHUB_OUTPUT
 
@@ -78,6 +80,7 @@ jobs:
       context: ${{ steps.analyze_details.outputs.context }}
       description: ${{ steps.analyze_details.outputs.description }}
       pr_is_draft: ${{ steps.analyze_details.outputs.pr_is_draft }}
+      pr_labels: ${{ steps.analyze_details.outputs.pr_labels }}
       pr_mergeable: ${{ steps.analyze_details.outputs.pr_mergeable }}
       sender: ${{ steps.analyze_details.outputs.sender }}
       state: ${{ steps.analyze_details.outputs.state }}
@@ -93,6 +96,7 @@ jobs:
           echo "context=${{ needs.collect_details.outputs.context == 'Terraform Cloud/ghalactic/repos' }}" >> $GITHUB_OUTPUT
           echo "description=${{ needs.collect_details.outputs.description == 'Terraform plan has no changes' }}" >> $GITHUB_OUTPUT
           echo "pr_is_draft=${{ needs.collect_details.outputs.pr_is_draft == 'false' }}" >> $GITHUB_OUTPUT
+          echo "pr_labels=${{ contains(fromJSON(needs.collect_details.outputs.pr_labels), 'renovate') && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'terraform') }}" >> $GITHUB_OUTPUT
           echo "pr_mergeable=${{ needs.collect_details.outputs.pr_mergeable == 'MERGEABLE' }}" >> $GITHUB_OUTPUT
           echo "sender=${{ needs.collect_details.outputs.sender == 'terraform-cloud[bot]' }}" >> $GITHUB_OUTPUT
           echo "state=${{ needs.collect_details.outputs.state == 'success' }}" >> $GITHUB_OUTPUT
@@ -107,6 +111,7 @@ jobs:
             steps.analyze_details.outputs.context == 'true' &&
             steps.analyze_details.outputs.description == 'true' &&
             steps.analyze_details.outputs.pr_is_draft == 'true' &&
+            steps.analyze_details.outputs.pr_labels == 'true' &&
             steps.analyze_details.outputs.pr_mergeable == 'true' &&
             steps.analyze_details.outputs.sender == 'true' &&
             steps.analyze_details.outputs.state == 'true' &&
@@ -139,6 +144,7 @@ jobs:
           echo '| Context | ${{ needs.analyze_details.outputs.context == 'true'  && '✅' || '❌' }} | `Terraform Cloud/ghalactic/repos` | `${{ needs.collect_details.outputs.context || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
           echo '| Description | ${{ needs.analyze_details.outputs.description == 'true'  && '✅' || '❌' }} | `Terraform plan has no changes` | `${{ needs.collect_details.outputs.description || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
           echo '| PR is draft | ${{ needs.analyze_details.outputs.pr_is_draft == 'true'  && '✅' || '❌' }} | `false` | `${{ needs.collect_details.outputs.pr_is_draft || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
+          echo '| PR labels | ${{ needs.analyze_details.outputs.pr_labels == 'true'  && '✅' || '❌' }} | `["renovate","terraform"]` | `${{ needs.collect_details.outputs.pr_labels || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
           echo '| PR mergeable | ${{ needs.analyze_details.outputs.pr_mergeable == 'true'  && '✅' || '❌' }} | `MERGEABLE` | `${{ needs.collect_details.outputs.pr_mergeable || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
           echo '| Sender | ${{ needs.analyze_details.outputs.sender == 'true'  && '✅' || '❌' }} | `terraform-cloud[bot]` | `${{ needs.collect_details.outputs.sender || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
           echo '| State | ${{ needs.analyze_details.outputs.state == 'true'  && '✅' || '❌' }} | `success` | `${{ needs.collect_details.outputs.state || '<null>' }}` |' >> $GITHUB_STEP_SUMMARY
