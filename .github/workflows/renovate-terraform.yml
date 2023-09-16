@@ -88,6 +88,12 @@ jobs:
       should_merge: ${{ steps.analyze_auto_merge.outputs.should_merge }}
 
     steps:
+      - name: Debug bullshit
+        run: |
+          echo "pr_labels=${{ needs.collect_details.outputs.pr_labels }}"
+          echo "pr_labels_is_empty=${{ needs.collect_details.outputs.pr_labels == '' }}"
+          echo "pr_labels_is_null=${{ needs.collect_details.outputs.pr_labels == null }}"
+
       - name: Analyze details
         id: analyze_details
         run: |
@@ -96,7 +102,7 @@ jobs:
           echo "context=${{ needs.collect_details.outputs.context == 'Terraform Cloud/ghalactic/repos' }}" >> $GITHUB_OUTPUT
           echo "description=${{ needs.collect_details.outputs.description == 'Terraform plan has no changes' }}" >> $GITHUB_OUTPUT
           echo "pr_is_draft=${{ needs.collect_details.outputs.pr_is_draft == 'false' }}" >> $GITHUB_OUTPUT
-          echo "pr_labels=${{ needs.collect_details.outputs.pr_labels != null && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'renovate') && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'terraform') }}" >> $GITHUB_OUTPUT
+          echo "pr_labels=${{ needs.collect_details.outputs.pr_labels && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'renovate') && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'terraform') }}" >> $GITHUB_OUTPUT
           echo "pr_mergeable=${{ needs.collect_details.outputs.pr_mergeable == 'MERGEABLE' }}" >> $GITHUB_OUTPUT
           echo "sender=${{ needs.collect_details.outputs.sender == 'terraform-cloud[bot]' }}" >> $GITHUB_OUTPUT
           echo "state=${{ needs.collect_details.outputs.state == 'success' }}" >> $GITHUB_OUTPUT
