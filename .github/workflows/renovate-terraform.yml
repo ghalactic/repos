@@ -13,10 +13,10 @@ jobs:
       commit_sha: ${{ steps.event.outputs.commit_sha }}
       context: ${{ steps.event.outputs.context }}
       description: ${{ steps.event.outputs.description }}
-      pr_is_draft: ${{ steps.pr.outputs.pr_is_draft || '' }}
-      pr_labels: ${{ steps.pr.outputs.pr_labels || '[]' }}
-      pr_mergeable: ${{ steps.pr.outputs.pr_mergeable || '' }}
-      pr_number: ${{ steps.pr.outputs.pr_number || '' }}
+      pr_is_draft: ${{ steps.pr.outputs.pr_is_draft }}
+      pr_labels: ${{ steps.pr.outputs.pr_labels }}
+      pr_mergeable: ${{ steps.pr.outputs.pr_mergeable }}
+      pr_number: ${{ steps.pr.outputs.pr_number }}
       sender: ${{ steps.event.outputs.sender }}
       state: ${{ steps.event.outputs.state }}
       verified: ${{ steps.event.outputs.verified }}
@@ -64,7 +64,7 @@ jobs:
           )
 
           echo "pr_is_draft=$(echo $PR | jq -r '.[0].isDraft')" >> $GITHUB_OUTPUT
-          echo "pr_labels=$(echo $PR | jq -c -r '.[0].labels | map(.name) | join(",")')" >> $GITHUB_OUTPUT
+          echo "pr_labels=$(echo $PR | jq -c -r '.[0].labels | map(.name)')" >> $GITHUB_OUTPUT
           echo "pr_mergeable=$(echo $PR | jq -r '.[0].mergeable')" >> $GITHUB_OUTPUT
           echo "pr_number=$(echo $PR | jq -r '.[0].number')" >> $GITHUB_OUTPUT
 
@@ -118,7 +118,7 @@ jobs:
           echo "context=${{ needs.collect_details.outputs.context == 'Terraform Cloud/ghalactic/repos' }}" >> $GITHUB_OUTPUT
           echo "description=${{ needs.collect_details.outputs.description == 'Terraform plan has no changes' }}" >> $GITHUB_OUTPUT
           echo "pr_is_draft=${{ needs.collect_details.outputs.pr_is_draft == 'false' }}" >> $GITHUB_OUTPUT
-          echo "pr_labels=${{ contains(fromJSON(needs.collect_details.outputs.pr_labels), 'renovate') && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'terraform') }}" >> $GITHUB_OUTPUT
+          echo "pr_labels=${{ needs.collect_details.outputs.pr_labels && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'renovate') && contains(fromJSON(needs.collect_details.outputs.pr_labels), 'terraform') }}" >> $GITHUB_OUTPUT
           echo "pr_mergeable=${{ needs.collect_details.outputs.pr_mergeable == 'MERGEABLE' }}" >> $GITHUB_OUTPUT
           echo "sender=${{ needs.collect_details.outputs.sender == 'terraform-cloud[bot]' }}" >> $GITHUB_OUTPUT
           echo "state=${{ needs.collect_details.outputs.state == 'success' }}" >> $GITHUB_OUTPUT
