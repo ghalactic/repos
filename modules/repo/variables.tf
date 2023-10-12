@@ -66,12 +66,6 @@ variable "renovate_post_upgrade_command" {
   default     = null
 }
 
-variable "dependabot_ecosystems" {
-  description = "The Dependabot ecosystems to use"
-  type        = list(string)
-  default     = []
-}
-
 variable "has_actions" {
   description = "Whether the repository has GitHub Actions enabled"
   type        = bool
