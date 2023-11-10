@@ -14,7 +14,7 @@ module "repo_github_release_from_tag" {
 
   ci_workflows                  = ["action"]
   use_release_action_main       = true
-  renovate_post_upgrade_command = "npm run renovate-post-upgrade"
+  renovate_post_upgrade_command = "make regenerate"
 
   has_discussions         = true
   has_release_discussions = true
@@ -34,7 +34,7 @@ module "repo_dependabot_automation" {
   ]
 
   ci_workflows                  = ["action"]
-  renovate_post_upgrade_command = "npm run renovate-post-upgrade"
+  renovate_post_upgrade_command = "make regenerate"
 
   has_discussions = true
 
