@@ -1,5 +1,5 @@
-resource "github_issue_labels" "this" {
-  repository = github_repository.this.name
+resource "github_issue_labels" "repos" {
+  repository = "repos"
 
   dynamic "label" {
     for_each = module.constants.issue_labels
