@@ -31,4 +31,4 @@ jobs:
 
       - name: Publish coverage
         if: ${{ github.event.inputs.isScheduled != 'true' }}
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
