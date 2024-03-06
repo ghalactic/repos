@@ -32,3 +32,5 @@ jobs:
       - name: Publish coverage
         if: ${{ github.event.inputs.isScheduled != 'true' }}
         uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
