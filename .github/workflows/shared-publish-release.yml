@@ -48,8 +48,13 @@ jobs:
         if: ${{ github.event.inputs.makeTarget }}
         run: make ${{ github.event.inputs.makeTarget }}
 
+      - name: WTF
+        run: |
+          echo github.event.inputs.useReleaseActionMain=${{ toJSON(github.event.inputs.useReleaseActionMain) }}
+          echo inputs.useReleaseActionMain=${{ toJSON(inputs.useReleaseActionMain) }}
+
       - name: Publish release
-        if: "!github.event.inputs.useReleaseActionMain"
+        if: github.event.inputs.useReleaseActionMain == false
         uses: ghalactic/github-release-from-tag@v5
         with:
           reactions: hooray,heart,rocket
@@ -57,7 +62,7 @@ jobs:
           discussionReactions: ${{ (github.event.inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}
 
       - name: Publish release (main)
-        if: github.event.inputs.useReleaseActionMain
+        if: github.event.inputs.useReleaseActionMain == true
         uses: ghalactic/github-release-from-tag@main
         with:
           reactions: hooray,heart,rocket
