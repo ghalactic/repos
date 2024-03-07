@@ -30,7 +30,7 @@ jobs:
           FIXTURES_GITHUB_TOKEN: ${{ secrets.FIXTURES_GITHUB_TOKEN }}
 
       - name: Publish coverage
-        if: ${{ github.event.inputs.isScheduled != 'true' }}
+        if: ${{ inputs.isScheduled != 'true' }}
         uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

@@ -27,4 +27,4 @@ jobs:
 %{ if use_release_action_main ~}
       useReleaseActionMain: true
 %{ endif ~}
-      tag: ${"$"}{{ github.event.inputs.tag }}
+      tag: ${"$"}{{ inputs.tag }}
