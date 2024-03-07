@@ -49,7 +49,7 @@ jobs:
         run: make ${{ github.event.inputs.makeTarget }}
 
       - name: Publish release
-        if: github.event.inputs.useReleaseActionMain != 'true'
+        if: "!github.event.inputs.useReleaseActionMain"
         uses: ghalactic/github-release-from-tag@v5
         with:
           reactions: hooray,heart,rocket
@@ -57,7 +57,7 @@ jobs:
           discussionReactions: ${{ (github.event.inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}
 
       - name: Publish release (main)
-        if: github.event.inputs.useReleaseActionMain == 'true'
+        if: github.event.inputs.useReleaseActionMain
         uses: ghalactic/github-release-from-tag@main
         with:
           reactions: hooray,heart,rocket
