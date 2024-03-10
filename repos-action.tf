@@ -19,27 +19,3 @@ module "repo_github_release_from_tag" {
   has_discussions         = true
   has_release_discussions = true
 }
-
-module "repo_dependabot_automation" {
-  source       = "./modules/repo"
-  name         = "dependabot-automation"
-  description  = "A GitHub Action that automates your Dependabot busywork"
-  homepage_url = "https://github.com/marketplace/actions/dependabot-automation"
-
-  topics = [
-    "actions",
-    "github-actions",
-    "dependabot",
-    "automation",
-  ]
-
-  ci_workflows                  = ["action"]
-  renovate_post_upgrade_command = "make regenerate"
-
-  has_discussions = true
-
-  template = {
-    owner      = module.constants.org
-    repository = module.repo_action_template.name
-  }
-}
