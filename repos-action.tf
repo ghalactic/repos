@@ -20,7 +20,7 @@ module "repo_github_release_from_tag" {
   has_release_discussions = true
 }
 
-module "repo_github_release_from_tag" {
+module "repo_provision_github_tokens" {
   source      = "./modules/repo"
   name        = "provision-github-tokens"
   description = "A GitHub Action that creates and rotates GitHub tokens for you"
