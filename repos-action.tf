@@ -19,3 +19,22 @@ module "repo_github_release_from_tag" {
   has_discussions         = true
   has_release_discussions = true
 }
+
+module "repo_github_release_from_tag" {
+  source      = "./modules/repo"
+  name        = "provision-github-tokens"
+  description = "A GitHub Action that creates and rotates GitHub tokens for you"
+
+  topics = [
+    "actions",
+    "github-actions",
+    "security",
+    "devops",
+    "infrastructure-as-code",
+    "provisioning",
+    "automation",
+  ]
+
+  ci_workflows                  = ["action"]
+  renovate_post_upgrade_command = "make regenerate"
+}
