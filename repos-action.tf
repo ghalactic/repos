@@ -12,6 +12,8 @@ module "repo_github_release_from_tag" {
     "release-automation",
   ]
 
+  pages_branch = "gh-pages"
+
   ci_workflows                  = ["action"]
   use_release_action_main       = true
   renovate_post_upgrade_command = "make regenerate"
