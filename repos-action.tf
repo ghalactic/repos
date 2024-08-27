@@ -38,6 +38,8 @@ module "repo_provision_github_tokens" {
     "automation",
   ]
 
+  pages_branch = "gh-pages"
+
   ci_workflows                  = ["action"]
   renovate_post_upgrade_command = "make regenerate"
 }
