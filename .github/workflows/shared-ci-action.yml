@@ -28,6 +28,7 @@ jobs:
         run: make ci
         env:
           FIXTURES_GITHUB_TOKEN: ${{ secrets.FIXTURES_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish coverage
         if: ${{ inputs.isScheduled != 'true' }}
