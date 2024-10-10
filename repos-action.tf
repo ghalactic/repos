@@ -14,7 +14,6 @@ module "repo_github_release_from_tag" {
 
   pages_branch = "gh-pages"
 
-  ci_workflows                  = ["action"]
   use_release_action_main       = true
   renovate_post_upgrade_command = "make regenerate"
 
@@ -40,6 +39,5 @@ module "repo_provision_github_tokens" {
 
   pages_branch = "gh-pages"
 
-  ci_workflows                  = ["action"]
   renovate_post_upgrade_command = "make regenerate"
 }

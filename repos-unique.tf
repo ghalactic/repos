@@ -5,8 +5,6 @@ module "repo_branding" {
   homepage_url = "https://ghalactic.github.io/branding"
 
   pages_branch = "gh-pages"
-
-  has_publish_release_workflow = false
 }
 
 module "repo_org_dot_github_dot_io" {
@@ -16,8 +14,6 @@ module "repo_org_dot_github_dot_io" {
   homepage_url = "https://ghalactic.github.io"
 
   pages_branch = "main"
-
-  has_publish_release_workflow = false
 }
 
 module "repo_renovate" {
@@ -26,6 +22,5 @@ module "repo_renovate" {
   description  = "Self-hosted Renovate for Ghalactic"
   homepage_url = "https://github.com/ghalactic/renovate/actions/workflows/renovate.yml"
 
-  has_publish_release_workflow = false
-  manage_renovate              = false
+  manage_renovate = false
 }
