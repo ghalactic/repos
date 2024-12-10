@@ -31,6 +31,12 @@ locals {
 output "issue_labels" {
   description = "The issue labels to use"
   value = {
+    blocked = {
+      name        = "blocked"
+      description = "Can't be worked on until something else is done"
+      color       = "d876e3"
+    }
+
     renovate = {
       name        = "renovate"
       description = "Pull requests created by Renovate"
