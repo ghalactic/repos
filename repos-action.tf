@@ -17,8 +17,7 @@ module "repo_github_release_from_tag" {
   use_release_action_main       = true
   renovate_post_upgrade_command = "make regenerate"
 
-  has_discussions         = true
-  has_release_discussions = true
+  has_discussions = true
 }
 
 module "repo_provision_github_tokens" {
