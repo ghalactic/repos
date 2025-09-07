@@ -23,6 +23,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     name: Publish release
+    concurrency: publish-release
 
     permissions:
       contents: write
@@ -52,6 +53,7 @@ jobs:
         if: "!inputs.useReleaseActionMain"
         uses: ghalactic/github-release-from-tag@v6
         with:
+          makeLatest: never
           reactions: hooray,heart,rocket
           discussionCategory: ${{ steps.checkTag.outputs.isSemVer == 'true' && inputs.discussionCategory || '' }}
           discussionReactions: ${{ (inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}
@@ -60,6 +62,7 @@ jobs:
         if: inputs.useReleaseActionMain
         uses: ghalactic/github-release-from-tag@main
         with:
+          makeLatest: never
           reactions: hooray,heart,rocket
           discussionCategory: ${{ steps.checkTag.outputs.isSemVer == 'true' && inputs.discussionCategory || '' }}
           discussionReactions: ${{ (inputs.discussionCategory && steps.checkTag.outputs.isSemVer == 'true') && 'hooray,heart,rocket' || '' }}
