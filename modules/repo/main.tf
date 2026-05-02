@@ -16,11 +16,11 @@ resource "github_repository" "this" {
 
   allow_auto_merge       = false
   delete_branch_on_merge = true
-  vulnerability_alerts   = true
 
   lifecycle {
     ignore_changes = [
       pages,
+      vulnerability_alerts,
     ]
   }
 
@@ -32,6 +32,15 @@ resource "github_repository" "this" {
       repository = var.template.repository
     }
   }
+}
+
+import {
+  to = github_repository_vulnerability_alerts.this
+  id = var.name
+}
+resource "github_repository_vulnerability_alerts" "this" {
+  repository = github_repository.this.name
+  enabled    = true
 }
 
 import {
