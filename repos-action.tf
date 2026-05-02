@@ -39,4 +39,7 @@ module "repo_provision_github_tokens" {
   pages_branch = "gh-pages"
 
   renovate_post_upgrade_command = "make regenerate"
+
+  has_discussions = true
+  has_projects    = true
 }

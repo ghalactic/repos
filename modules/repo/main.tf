@@ -10,7 +10,7 @@ resource "github_repository" "this" {
 
   auto_init       = true
   has_discussions = var.has_discussions
-  has_projects    = false
+  has_projects    = var.has_projects
   has_wiki        = false
   has_issues      = true
 

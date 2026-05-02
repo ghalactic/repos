@@ -66,6 +66,12 @@ variable "has_discussions" {
   default     = false
 }
 
+variable "has_projects" {
+  description = "Whether the repository has projects"
+  type        = bool
+  default     = false
+}
+
 variable "release_make_target" {
   description = "The make target to run before publishing releases"
   type        = string
