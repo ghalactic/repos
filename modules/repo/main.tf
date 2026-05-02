@@ -43,11 +43,6 @@ resource "github_repository_vulnerability_alerts" "this" {
   enabled    = true
 }
 
-import {
-  for_each = var.pages_branch == null ? {} : { pages = var.pages_branch }
-  to       = github_repository_pages.this[each.key]
-  id       = var.name
-}
 resource "github_repository_pages" "this" {
   for_each = var.pages_branch == null ? {} : { pages = var.pages_branch }
 
