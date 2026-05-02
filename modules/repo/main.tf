@@ -18,6 +18,12 @@ resource "github_repository" "this" {
   delete_branch_on_merge = true
   vulnerability_alerts   = true
 
+  lifecycle {
+    ignore_changes = [
+      pages,
+    ]
+  }
+
   dynamic "template" {
     for_each = var.template == null ? [] : [null]
 
@@ -26,15 +32,22 @@ resource "github_repository" "this" {
       repository = var.template.repository
     }
   }
+}
 
-  dynamic "pages" {
-    for_each = var.pages_branch == null ? [] : [null]
+import {
+  for_each = var.pages_branch == null ? {} : { pages = var.pages_branch }
+  to       = github_repository_pages.this[each.key]
+  id       = var.name
+}
+resource "github_repository_pages" "this" {
+  for_each = var.pages_branch == null ? {} : { pages = var.pages_branch }
 
-    content {
-      source {
-        branch = var.pages_branch
-      }
-    }
+  repository = github_repository.this.name
+  build_type = "legacy"
+
+  source {
+    branch = each.value
+    path   = "/"
   }
 }
 
