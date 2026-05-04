@@ -7,6 +7,12 @@ module "repo_branding" {
   pages_branch = "gh-pages"
 }
 
+module "repo_vale_style" {
+  source      = "./modules/repo"
+  name        = "vale-style"
+  description = "Vale style configuration for Ghalactic"
+}
+
 module "repo_org_dot_github_dot_io" {
   source       = "./modules/repo"
   name         = "ghalactic.github.io"
