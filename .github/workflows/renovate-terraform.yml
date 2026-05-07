@@ -22,13 +22,6 @@ jobs:
       verified: ${{ steps.event.outputs.verified }}
 
     steps:
-      - name: Obtain token
-        id: token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.RENOVATE_APP_ID }}
-          private_key: ${{ secrets.RENOVATE_APP_PK }}
-
       - name: Event details
         id: event
         run: |
@@ -52,7 +45,7 @@ jobs:
           steps.event.outputs.verified == 'true'
         id: pr
         env:
-          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
         run: |
           PR=$(
             gh pr list \
@@ -183,16 +176,9 @@ jobs:
     if: needs.analyze_details.outputs.should_merge == 'true'
 
     steps:
-      - name: Obtain token
-        id: token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.RENOVATE_APP_ID }}
-          private_key: ${{ secrets.RENOVATE_APP_PK }}
-
       - name: Merge
         env:
-          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
         run: |
           gh pr comment \
             --repo "$GITHUB_REPOSITORY" \
