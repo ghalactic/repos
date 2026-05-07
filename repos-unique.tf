@@ -30,3 +30,9 @@ module "repo_renovate" {
 
   manage_renovate = false
 }
+
+module "repo_token_provider" {
+  source      = "./modules/repo"
+  name        = "token-provider"
+  description = "Provisions GitHub tokens for Ghalactic"
+}
