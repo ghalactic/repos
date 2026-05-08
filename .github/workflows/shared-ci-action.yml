@@ -16,10 +16,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Detect package manager
+        id: pm
+        run: |
+          if jq -er '.packageManager // empty | startswith("pnpm")' package.json > /dev/null 2>&1; then
+            echo "name=pnpm" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=npm" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up pnpm
+        if: steps.pm.outputs.name == 'pnpm'
+        uses: pnpm/action-setup@v6
+
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: "24"
+          node-version-file: .nvmrc
+          cache: ${{ steps.pm.outputs.name }}
 
       - name: Install dependencies
         run: make link-dependencies
