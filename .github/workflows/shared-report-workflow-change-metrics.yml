@@ -1,0 +1,29 @@
+on:
+  workflow_call:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    name: Report workflow change metrics
+
+    steps:
+      - name: Push change metrics
+        run: |
+          workflow_files=$(
+            echo '${{ toJSON(github.event.commits) }}' \
+              | jq -r '[.[].added[], .[].modified[]] | unique[] | select(startswith(".github/workflows/"))'
+          )
+
+          if [ -z "$workflow_files" ]; then
+            echo "No workflow files changed"
+            exit 0
+          fi
+
+          ts=$(date +%s)
+
+          echo "$workflow_files" | while read -r file; do
+            echo "Pushing metric for ${file}"
+            curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
+              -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
+              -d "workflow_changed_timestamp_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow_file=${file} value=${ts}"
+          done

@@ -1,0 +1,28 @@
+on:
+  workflow_call:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    name: Report workflow run metrics
+
+    steps:
+      - name: Push run created metric
+        if: github.event.action == 'requested'
+        run: |
+          created_ts=$(date -d "${{ github.event.workflow_run.created_at }}" +%s)
+
+          curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
+            -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
+            -d "workflow_run_created_timestamp_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }} value=${created_ts}"
+
+      - name: Push run duration metric
+        if: github.event.action == 'completed'
+        run: |
+          started_ts=$(date -d "${{ github.event.workflow_run.run_started_at }}" +%s)
+          updated_ts=$(date -d "${{ github.event.workflow_run.updated_at }}" +%s)
+          duration=$(( updated_ts - started_ts ))
+
+          curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
+            -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
+            -d "workflow_run_duration_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }},conclusion=${{ github.event.workflow_run.conclusion }} value=${duration}"
