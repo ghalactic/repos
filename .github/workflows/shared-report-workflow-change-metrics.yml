@@ -58,7 +58,7 @@ jobs:
               }')
 
             curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/metrics" \
-              -H "Authorization: Bearer ${{ secrets.OTLP_TOKEN }}" \
+              -u "${{ vars.OTLP_USERNAME }}:${{ secrets.OTLP_PASSWORD }}" \
               -H "Content-Type: application/json" \
               -d "$payload"
           done
