@@ -2,9 +2,9 @@ on:
   workflow_call:
 
 jobs:
-  report:
+  observe:
     runs-on: ubuntu-latest
-    name: Report workflow change metrics
+    name: Observe workflow changes
 
     steps:
       - name: Find changed workflow files

@@ -2,9 +2,9 @@ on:
   workflow_call:
 
 jobs:
-  report:
+  observe:
     runs-on: ubuntu-latest
-    name: Report workflow run events
+    name: Observe workflow runs
 
     steps:
       - name: Push run created event
