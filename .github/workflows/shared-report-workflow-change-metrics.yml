@@ -11,7 +11,7 @@ jobs:
         run: |
           workflow_files=$(
             echo '${{ toJSON(github.event.commits) }}' \
-              | jq -r '[.[].added[], .[].modified[]] | unique[] | select(startswith(".github/workflows/"))'
+              | jq -r '[.[]  | ((.added // [])[], (.modified // [])[])] | unique[] | select(startswith(".github/workflows/"))'
           )
 
           if [ -z "$workflow_files" ]; then
