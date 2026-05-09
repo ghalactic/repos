@@ -20,10 +20,45 @@ jobs:
           fi
 
           ts=$(date +%s)
+          ts_nano="${ts}000000000"
 
           echo "$workflow_files" | while read -r file; do
             echo "Pushing metric for ${file}"
-            curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
-              -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
-              -d "workflow_changed_timestamp_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow_file=${file} value=${ts}"
+
+            payload=$(jq -nc \
+              --arg name "workflow_changed_timestamp_seconds" \
+              --arg org "${{ github.event.repository.owner.login }}" \
+              --arg repo "${{ github.event.repository.name }}" \
+              --arg workflow_file "$file" \
+              --argjson value "$ts" \
+              --arg ts "$ts_nano" \
+              '{
+                resourceMetrics: [{
+                  resource: {
+                    attributes: [
+                      {key: "org", value: {stringValue: $org}}
+                    ]
+                  },
+                  scopeMetrics: [{
+                    metrics: [{
+                      name: $name,
+                      gauge: {
+                        dataPoints: [{
+                          asDouble: $value,
+                          timeUnixNano: $ts,
+                          attributes: [
+                            {key: "repo", value: {stringValue: $repo}},
+                            {key: "workflow_file", value: {stringValue: $workflow_file}}
+                          ]
+                        }]
+                      }
+                    }]
+                  }]
+                }]
+              }')
+
+            curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/metrics" \
+              -H "Authorization: Bearer ${{ secrets.OTLP_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d "$payload"
           done

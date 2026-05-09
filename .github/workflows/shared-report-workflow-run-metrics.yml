@@ -11,10 +11,46 @@ jobs:
         if: github.event.action == 'requested'
         run: |
           created_ts=$(date -d "${{ github.event.workflow_run.created_at }}" +%s)
+          ts_nano="${created_ts}000000000"
 
-          curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
-            -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
-            -d "workflow_run_created_timestamp_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }},trigger=${{ github.event.workflow_run.event }} value=${created_ts}"
+          payload=$(jq -nc \
+            --arg name "workflow_run_created_timestamp_seconds" \
+            --arg org "${{ github.event.repository.owner.login }}" \
+            --arg repo "${{ github.event.repository.name }}" \
+            --arg workflow "${{ github.event.workflow_run.name }}" \
+            --arg trigger "${{ github.event.workflow_run.event }}" \
+            --argjson value "$created_ts" \
+            --arg ts "$ts_nano" \
+            '{
+              resourceMetrics: [{
+                resource: {
+                  attributes: [
+                    {key: "org", value: {stringValue: $org}}
+                  ]
+                },
+                scopeMetrics: [{
+                  metrics: [{
+                    name: $name,
+                    gauge: {
+                      dataPoints: [{
+                        asDouble: $value,
+                        timeUnixNano: $ts,
+                        attributes: [
+                          {key: "repo", value: {stringValue: $repo}},
+                          {key: "workflow", value: {stringValue: $workflow}},
+                          {key: "trigger", value: {stringValue: $trigger}}
+                        ]
+                      }]
+                    }
+                  }]
+                }]
+              }]
+            }')
+
+          curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/metrics" \
+            -H "Authorization: Bearer ${{ secrets.OTLP_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "$payload"
 
       - name: Push run duration metric
         if: github.event.action == 'completed'
@@ -22,7 +58,45 @@ jobs:
           started_ts=$(date -d "${{ github.event.workflow_run.run_started_at }}" +%s)
           updated_ts=$(date -d "${{ github.event.workflow_run.updated_at }}" +%s)
           duration=$(( updated_ts - started_ts ))
+          ts_nano="${updated_ts}000000000"
 
-          curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
-            -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
-            -d "workflow_run_duration_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }},trigger=${{ github.event.workflow_run.event }},conclusion=${{ github.event.workflow_run.conclusion }} value=${duration}"
+          payload=$(jq -nc \
+            --arg name "workflow_run_duration_seconds" \
+            --arg org "${{ github.event.repository.owner.login }}" \
+            --arg repo "${{ github.event.repository.name }}" \
+            --arg workflow "${{ github.event.workflow_run.name }}" \
+            --arg trigger "${{ github.event.workflow_run.event }}" \
+            --arg conclusion "${{ github.event.workflow_run.conclusion }}" \
+            --argjson value "$duration" \
+            --arg ts "$ts_nano" \
+            '{
+              resourceMetrics: [{
+                resource: {
+                  attributes: [
+                    {key: "org", value: {stringValue: $org}}
+                  ]
+                },
+                scopeMetrics: [{
+                  metrics: [{
+                    name: $name,
+                    gauge: {
+                      dataPoints: [{
+                        asDouble: $value,
+                        timeUnixNano: $ts,
+                        attributes: [
+                          {key: "repo", value: {stringValue: $repo}},
+                          {key: "workflow", value: {stringValue: $workflow}},
+                          {key: "trigger", value: {stringValue: $trigger}},
+                          {key: "conclusion", value: {stringValue: $conclusion}}
+                        ]
+                      }]
+                    }
+                  }]
+                }]
+              }]
+            }')
+
+          curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/metrics" \
+            -H "Authorization: Bearer ${{ secrets.OTLP_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d "$payload"
