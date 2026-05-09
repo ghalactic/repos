@@ -4,55 +4,52 @@ on:
 jobs:
   report:
     runs-on: ubuntu-latest
-    name: Report workflow run metrics
+    name: Report workflow run events
 
     steps:
-      - name: Push run created metric
+      - name: Push run created event
         if: github.event.action == 'requested'
         run: |
           created_ts=$(date -d "${{ github.event.workflow_run.created_at }}" +%s)
           ts_nano="${created_ts}000000000"
 
           payload=$(jq -nc \
-            --arg name "workflow_run_created_timestamp_seconds" \
             --arg org "${{ github.event.repository.owner.login }}" \
             --arg repo "${{ github.event.repository.name }}" \
             --arg workflow "${{ github.event.workflow_run.name }}" \
             --arg trigger "${{ github.event.workflow_run.event }}" \
-            --argjson value "$created_ts" \
             --arg ts "$ts_nano" \
             '{
-              resourceMetrics: [{
+              resourceLogs: [{
                 resource: {
                   attributes: [
+                    {key: "service.name", value: {stringValue: "workflow-observability"}},
                     {key: "org", value: {stringValue: $org}}
                   ]
                 },
-                scopeMetrics: [{
-                  metrics: [{
-                    name: $name,
-                    gauge: {
-                      dataPoints: [{
-                        asDouble: $value,
-                        timeUnixNano: $ts,
-                        attributes: [
-                          {key: "repo", value: {stringValue: $repo}},
-                          {key: "workflow", value: {stringValue: $workflow}},
-                          {key: "trigger", value: {stringValue: $trigger}}
-                        ]
-                      }]
-                    }
+                scopeLogs: [{
+                  logRecords: [{
+                    timeUnixNano: $ts,
+                    severityNumber: 9,
+                    severityText: "INFO",
+                    body: {stringValue: "workflow run created"},
+                    attributes: [
+                      {key: "event", value: {stringValue: "workflow_run_created"}},
+                      {key: "repo", value: {stringValue: $repo}},
+                      {key: "workflow", value: {stringValue: $workflow}},
+                      {key: "trigger", value: {stringValue: $trigger}}
+                    ]
                   }]
                 }]
               }]
             }')
 
-          curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/metrics" \
+          curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/logs" \
             -u "${{ vars.OTLP_USERNAME }}:${{ secrets.OTLP_PASSWORD }}" \
             -H "Content-Type: application/json" \
             -d "$payload"
 
-      - name: Push run duration metric
+      - name: Push run completed event
         if: github.event.action == 'completed'
         run: |
           started_ts=$(date -d "${{ github.event.workflow_run.run_started_at }}" +%s)
@@ -61,42 +58,41 @@ jobs:
           ts_nano="${updated_ts}000000000"
 
           payload=$(jq -nc \
-            --arg name "workflow_run_duration_seconds" \
             --arg org "${{ github.event.repository.owner.login }}" \
             --arg repo "${{ github.event.repository.name }}" \
             --arg workflow "${{ github.event.workflow_run.name }}" \
             --arg trigger "${{ github.event.workflow_run.event }}" \
             --arg conclusion "${{ github.event.workflow_run.conclusion }}" \
-            --argjson value "$duration" \
+            --argjson duration "$duration" \
             --arg ts "$ts_nano" \
             '{
-              resourceMetrics: [{
+              resourceLogs: [{
                 resource: {
                   attributes: [
+                    {key: "service.name", value: {stringValue: "workflow-observability"}},
                     {key: "org", value: {stringValue: $org}}
                   ]
                 },
-                scopeMetrics: [{
-                  metrics: [{
-                    name: $name,
-                    gauge: {
-                      dataPoints: [{
-                        asDouble: $value,
-                        timeUnixNano: $ts,
-                        attributes: [
-                          {key: "repo", value: {stringValue: $repo}},
-                          {key: "workflow", value: {stringValue: $workflow}},
-                          {key: "trigger", value: {stringValue: $trigger}},
-                          {key: "conclusion", value: {stringValue: $conclusion}}
-                        ]
-                      }]
-                    }
+                scopeLogs: [{
+                  logRecords: [{
+                    timeUnixNano: $ts,
+                    severityNumber: 9,
+                    severityText: "INFO",
+                    body: {stringValue: "workflow run completed"},
+                    attributes: [
+                      {key: "event", value: {stringValue: "workflow_run_completed"}},
+                      {key: "repo", value: {stringValue: $repo}},
+                      {key: "workflow", value: {stringValue: $workflow}},
+                      {key: "trigger", value: {stringValue: $trigger}},
+                      {key: "conclusion", value: {stringValue: $conclusion}},
+                      {key: "duration_seconds", value: {intValue: $duration}}
+                    ]
                   }]
                 }]
               }]
             }')
 
-          curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/metrics" \
+          curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/logs" \
             -u "${{ vars.OTLP_USERNAME }}:${{ secrets.OTLP_PASSWORD }}" \
             -H "Content-Type: application/json" \
             -d "$payload"

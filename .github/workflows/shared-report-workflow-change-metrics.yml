@@ -24,7 +24,7 @@ jobs:
 
             core.setOutput("files", changed.join("\n"));
 
-      - name: Push change metrics
+      - name: Push change events
         if: steps.changed.outputs.files != ''
         run: |
           ts=$(date +%s)
@@ -32,41 +32,38 @@ jobs:
 
           echo "${{ steps.changed.outputs.files }}" | while read -r file; do
             [ -z "$file" ] && continue
-            echo "Pushing metric for ${file}"
+            echo "Pushing event for ${file}"
 
             payload=$(jq -nc \
-              --arg name "workflow_changed_timestamp_seconds" \
               --arg org "${{ github.event.repository.owner.login }}" \
               --arg repo "${{ github.event.repository.name }}" \
               --arg workflow_file "$file" \
-              --argjson value "$ts" \
               --arg ts "$ts_nano" \
               '{
-                resourceMetrics: [{
+                resourceLogs: [{
                   resource: {
                     attributes: [
+                      {key: "service.name", value: {stringValue: "workflow-observability"}},
                       {key: "org", value: {stringValue: $org}}
                     ]
                   },
-                  scopeMetrics: [{
-                    metrics: [{
-                      name: $name,
-                      gauge: {
-                        dataPoints: [{
-                          asDouble: $value,
-                          timeUnixNano: $ts,
-                          attributes: [
-                            {key: "repo", value: {stringValue: $repo}},
-                            {key: "workflow_file", value: {stringValue: $workflow_file}}
-                          ]
-                        }]
-                      }
+                  scopeLogs: [{
+                    logRecords: [{
+                      timeUnixNano: $ts,
+                      severityNumber: 9,
+                      severityText: "INFO",
+                      body: {stringValue: "workflow file changed"},
+                      attributes: [
+                        {key: "event", value: {stringValue: "workflow_changed"}},
+                        {key: "repo", value: {stringValue: $repo}},
+                        {key: "workflow_file", value: {stringValue: $workflow_file}}
+                      ]
                     }]
                   }]
                 }]
               }')
 
-            curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/metrics" \
+            curl -sS --fail-with-body -X POST "${{ vars.OTLP_ENDPOINT }}/v1/logs" \
               -u "${{ vars.OTLP_USERNAME }}:${{ secrets.OTLP_PASSWORD }}" \
               -H "Content-Type: application/json" \
               -d "$payload"
