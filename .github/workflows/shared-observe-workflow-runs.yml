@@ -18,6 +18,7 @@ jobs:
             --arg repo "${{ github.event.repository.name }}" \
             --arg workflow "${{ github.event.workflow_run.name }}" \
             --arg trigger "${{ github.event.workflow_run.event }}" \
+            --arg html_url "${{ github.event.workflow_run.html_url }}" \
             --arg ts "$ts_nano" \
             '{
               resourceLogs: [{
@@ -37,7 +38,8 @@ jobs:
                       {key: "event", value: {stringValue: "workflow_run_created"}},
                       {key: "repo", value: {stringValue: $repo}},
                       {key: "workflow", value: {stringValue: $workflow}},
-                      {key: "trigger", value: {stringValue: $trigger}}
+                      {key: "trigger", value: {stringValue: $trigger}},
+                      {key: "html_url", value: {stringValue: $html_url}}
                     ]
                   }]
                 }]
@@ -64,6 +66,7 @@ jobs:
             --arg trigger "${{ github.event.workflow_run.event }}" \
             --arg conclusion "${{ github.event.workflow_run.conclusion }}" \
             --argjson duration "$duration" \
+            --arg html_url "${{ github.event.workflow_run.html_url }}" \
             --arg ts "$ts_nano" \
             '{
               resourceLogs: [{
@@ -85,7 +88,8 @@ jobs:
                       {key: "workflow", value: {stringValue: $workflow}},
                       {key: "trigger", value: {stringValue: $trigger}},
                       {key: "conclusion", value: {stringValue: $conclusion}},
-                      {key: "duration_seconds", value: {intValue: $duration}}
+                      {key: "duration_seconds", value: {intValue: $duration}},
+                      {key: "html_url", value: {stringValue: $html_url}}
                     ]
                   }]
                 }]

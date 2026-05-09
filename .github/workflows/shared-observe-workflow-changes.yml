@@ -23,6 +23,7 @@ jobs:
               .filter((f) => f.startsWith(".github/workflows/"));
 
             core.setOutput("files", changed.join("\n"));
+            core.setOutput("html_url", commit.html_url);
 
       - name: Push change events
         if: steps.changed.outputs.files != ''
@@ -38,6 +39,7 @@ jobs:
               --arg org "${{ github.event.repository.owner.login }}" \
               --arg repo "${{ github.event.repository.name }}" \
               --arg workflow_file "$file" \
+              --arg html_url "${{ steps.changed.outputs.html_url }}" \
               --arg ts "$ts_nano" \
               '{
                 resourceLogs: [{
@@ -56,7 +58,8 @@ jobs:
                       attributes: [
                         {key: "event", value: {stringValue: "workflow_changed"}},
                         {key: "repo", value: {stringValue: $repo}},
-                        {key: "workflow_file", value: {stringValue: $workflow_file}}
+                        {key: "workflow_file", value: {stringValue: $workflow_file}},
+                        {key: "html_url", value: {stringValue: $html_url}}
                       ]
                     }]
                   }]
