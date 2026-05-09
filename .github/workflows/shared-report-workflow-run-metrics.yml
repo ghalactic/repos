@@ -14,7 +14,7 @@ jobs:
 
           curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
             -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
-            -d "workflow_run_created_timestamp_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }} value=${created_ts}"
+            -d "workflow_run_created_timestamp_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }},trigger=${{ github.event.workflow_run.event }} value=${created_ts}"
 
       - name: Push run duration metric
         if: github.event.action == 'completed'
@@ -25,4 +25,4 @@ jobs:
 
           curl -sf -X POST "${{ vars.GRAFANA_METRICS_INFLUX_EP }}/api/v1/push/influx/write" \
             -u "${{ vars.GRAFANA_METRICS_AP_ID }}:${{ secrets.GRAFANA_METRICS_AP_TOKEN }}" \
-            -d "workflow_run_duration_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }},conclusion=${{ github.event.workflow_run.conclusion }} value=${duration}"
+            -d "workflow_run_duration_seconds,org=${{ github.event.repository.owner.login }},repo=${{ github.event.repository.name }},workflow=${{ github.event.workflow_run.name }},trigger=${{ github.event.workflow_run.event }},conclusion=${{ github.event.workflow_run.conclusion }} value=${duration}"
