@@ -5,6 +5,12 @@ data "github_repository_file" "observed_workflow" {
 }
 
 locals {
+  threshold_colors = {
+    healthy  = "green"
+    warning  = "#EAB839"
+    critical = "red"
+  }
+
   workflow_names = {
     for file, config in var.observe_workflows :
     file => yamldecode(
@@ -16,6 +22,14 @@ locals {
     for file, _ in var.observe_workflows :
     ".github/workflows/${file}"
   ]
+
+  last_run_started_thresholds = {
+    for file, config in var.observe_workflows : file => [
+      { value = 0, color = local.threshold_colors.healthy },
+      { value = config.warning_seconds, color = local.threshold_colors.warning },
+      { value = config.critical_seconds, color = local.threshold_colors.critical },
+    ]
+  }
 }
 
 resource "github_repository_file" "observe_workflow_runs" {
@@ -53,15 +67,25 @@ resource "github_repository_file" "observe_workflow_changes" {
 resource "grafana_dashboard" "observed_workflow" {
   for_each = var.observe_workflows
 
+  folder = var.grafana_folder_uid
+
   config_json = replace(
-    templatefile("grafana/dashboard.json", {
-      title         = each.value.title
-      repo          = var.name
-      workflow      = local.workflow_names[each.key]
-      workflow_file = each.key
-    }),
-    "\"__LAST_RUN_STARTED_THRESHOLDS__\"",
-    jsonencode(each.value.last_run_started_thresholds)
+    replace(
+      replace(
+        templatefile("grafana/dashboard.json", {
+          title         = each.value.title
+          repo          = var.name
+          workflow      = local.workflow_names[each.key]
+          workflow_file = each.key
+        }),
+        "\"__LAST_RUN_STARTED_THRESHOLDS__\"",
+        jsonencode(local.last_run_started_thresholds[each.key])
+      ),
+      "__WARNING_THRESHOLD_SECONDS__",
+      tostring(each.value.warning_seconds)
+    ),
+    "__CRITICAL_THRESHOLD_SECONDS__",
+    tostring(each.value.critical_seconds)
   )
 }
 
