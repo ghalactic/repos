@@ -17,13 +17,6 @@ resource "github_repository" "this" {
   allow_auto_merge       = false
   delete_branch_on_merge = true
 
-  lifecycle {
-    ignore_changes = [
-      pages,
-      vulnerability_alerts,
-    ]
-  }
-
   dynamic "template" {
     for_each = var.template == null ? [] : [null]
 
