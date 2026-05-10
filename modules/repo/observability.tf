@@ -120,7 +120,7 @@ resource "grafana_rule_group" "observed_workflow" {
       }
 
       model = jsonencode({
-        expr      = "count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${var.name}\" | workflow=\"${local.workflow_names[each.key]}\" | trigger=\"schedule\" [${each.value.critical_seconds}s])"
+        expr      = "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${var.name}\" | workflow=\"${local.workflow_names[each.key]}\" | trigger=\"schedule\" [${each.value.critical_seconds}s]))"
         queryType = "range"
         refId     = "runs"
       })

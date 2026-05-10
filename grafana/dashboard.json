@@ -632,7 +632,7 @@
                       "spec": {
                         "direction": "backward",
                         "editorMode": "code",
-                        "expr": "count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__WARNING_THRESHOLD_SECONDS__s])",
+                        "expr": "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__WARNING_THRESHOLD_SECONDS__s]))",
                         "queryType": "range",
                         "legendFormat": "warning"
                       }
@@ -654,7 +654,7 @@
                       "spec": {
                         "direction": "backward",
                         "editorMode": "code",
-                        "expr": "count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__CRITICAL_THRESHOLD_SECONDS__s])",
+                        "expr": "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__CRITICAL_THRESHOLD_SECONDS__s]))",
                         "queryType": "range",
                         "legendFormat": "critical"
                       }
