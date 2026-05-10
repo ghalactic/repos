@@ -50,14 +50,14 @@ resource "github_repository_file" "observe_workflow_changes" {
   })
 }
 
-# resource "grafana_dashboard" "observed_workflow" {
-#   for_each = var.observe_workflows
+resource "grafana_dashboard" "observed_workflow" {
+  for_each = var.observe_workflows
 
-#   config_json = templatefile("grafana/dashboard.json", {
-#     title                       = each.value.title
-#     repo                        = var.name
-#     workflow                    = local.workflow_names[each.key]
-#     workflow_file               = each.key
-#     last_run_started_thresholds = jsonencode(each.value.last_run_started_thresholds)
-#   })
-# }
+  config_json = templatefile("grafana/dashboard.json", {
+    title                       = each.value.title
+    repo                        = var.name
+    workflow                    = local.workflow_names[each.key]
+    workflow_file               = each.key
+    last_run_started_thresholds = jsonencode(each.value.last_run_started_thresholds)
+  })
+}
