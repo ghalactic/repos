@@ -50,10 +50,9 @@ resource "github_repository_file" "observe_workflow_changes" {
   })
 }
 
-# Phase 2: Uncomment after service account is created
 # resource "grafana_dashboard" "observed_workflow" {
 #   for_each = var.observe_workflows
-#
+
 #   config_json = templatefile("grafana/dashboard.json", {
 #     title                       = each.value.title
 #     repo                        = var.name
