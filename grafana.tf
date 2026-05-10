@@ -1,32 +1,39 @@
+data "grafana_cloud_organization" "this" {
+  provider = grafana.cloud
+
+  slug = module.constants.org
+}
+
 resource "grafana_cloud_stack" "this" {
   provider = grafana.cloud
 
-  name        = "ghalactic"
+  name        = "ghalactic.grafana.net"
   slug        = "ghalactic"
   region_slug = "prod-us-east-3"
 }
 
-resource "grafana_cloud_access_policy" "workflow_observability" {
+resource "grafana_cloud_access_policy" "github_actions" {
   provider = grafana.cloud
 
-  name         = "workflow-observability"
-  display_name = "Workflow observability"
-  region       = grafana_cloud_stack.this.region_slug
+  name         = "github-actions"
+  display_name = "GitHub Actions"
+  region       = "us"
 
-  scopes = ["logs:write", "metrics:write"]
+  scopes = ["logs:write"]
 
   realm {
-    type       = "stack"
-    identifier = grafana_cloud_stack.this.id
+    type       = "org"
+    identifier = data.grafana_cloud_organization.this.id
   }
 }
 
-resource "grafana_cloud_access_policy_token" "workflow_observability" {
+resource "grafana_cloud_access_policy_token" "github_actions_workflows" {
   provider = grafana.cloud
 
   name             = "github-actions-workflows"
-  access_policy_id = grafana_cloud_access_policy.workflow_observability.policy_id
-  region           = grafana_cloud_stack.this.region_slug
+  display_name     = "Workflows"
+  region           = "us"
+  access_policy_id = grafana_cloud_access_policy.github_actions.policy_id
 }
 
 resource "grafana_cloud_stack_service_account" "this" {
@@ -59,6 +66,6 @@ resource "github_actions_organization_variable" "otlp_username" {
 
 resource "github_actions_organization_secret" "otlp_password" {
   secret_name = "OTLP_PASSWORD"
-  value       = grafana_cloud_access_policy_token.workflow_observability.token
+  value       = grafana_cloud_access_policy_token.github_actions_workflows.token
   visibility  = "all"
 }

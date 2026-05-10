@@ -30,6 +30,7 @@ resource "github_repository_file" "observe_workflow_runs" {
 
   content = templatefile("dot-github/observe-workflow-runs.yml", {
     workflows_json = jsonencode(values(local.workflow_names))
+    org            = module.constants.org
   })
 }
 
@@ -45,6 +46,7 @@ resource "github_repository_file" "observe_workflow_changes" {
 
   content = templatefile("dot-github/observe-workflow-changes.yml", {
     paths_json = jsonencode(local.observed_workflow_files)
+    org        = module.constants.org
   })
 }
 
