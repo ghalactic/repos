@@ -15,7 +15,7 @@ variable "GITHUB_APP_PEM_FILE" {
   sensitive = true
 }
 
-variable "GRAFANA_CLOUD_API_KEY" {
+variable "GRAFANA_CLOUD_ACCESS_POLICY_TOKEN" {
   type      = string
   sensitive = true
 }

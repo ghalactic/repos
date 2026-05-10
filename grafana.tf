@@ -23,6 +23,18 @@ resource "grafana_cloud_access_policy_token" "workflow_observability" {
   region           = grafana_cloud_stack.this.region_slug
 }
 
+resource "grafana_cloud_stack_service_account" "this" {
+  stack_slug = grafana_cloud_stack.this.slug
+  name       = "terraform"
+  role       = "Admin"
+}
+
+resource "grafana_cloud_stack_service_account_token" "this" {
+  stack_slug         = grafana_cloud_stack.this.slug
+  name               = "terraform"
+  service_account_id = grafana_cloud_stack_service_account.this.id
+}
+
 resource "github_actions_organization_variable" "otlp_endpoint" {
   variable_name = "OTLP_ENDPOINT"
   value         = "https://otlp-gateway-${grafana_cloud_stack.this.region_slug}.grafana.net/otlp"
