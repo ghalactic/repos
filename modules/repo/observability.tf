@@ -128,6 +128,26 @@ resource "grafana_rule_group" "observed_workflow" {
     }
 
     data {
+      ref_id         = "reduced"
+      datasource_uid = "__expr__"
+
+      relative_time_range {
+        from = 0
+        to   = 0
+      }
+
+      model = jsonencode({
+        type       = "reduce"
+        expression = "runs"
+        refId      = "reduced"
+        reducer    = "last"
+        settings = {
+          mode = "dropNN"
+        }
+      })
+    }
+
+    data {
       ref_id         = "threshold"
       datasource_uid = "__expr__"
 
@@ -138,7 +158,7 @@ resource "grafana_rule_group" "observed_workflow" {
 
       model = jsonencode({
         type       = "threshold"
-        expression = "runs"
+        expression = "reduced"
         refId      = "threshold"
         conditions = [
           {
