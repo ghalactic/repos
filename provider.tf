@@ -9,7 +9,11 @@ provider "github" {
 }
 
 provider "grafana" {
+  alias                     = "cloud"
   cloud_access_policy_token = var.GRAFANA_CLOUD_ACCESS_POLICY_TOKEN
-  url                       = grafana_cloud_stack.this.url
-  auth                      = grafana_cloud_stack_service_account_token.this.key
+}
+
+provider "grafana" {
+  url  = grafana_cloud_stack.this.url
+  auth = grafana_cloud_stack_service_account_token.this.key
 }
