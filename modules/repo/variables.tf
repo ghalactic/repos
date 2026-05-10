@@ -85,13 +85,23 @@ variable "use_release_action_main" {
 }
 
 variable "observe_workflows" {
-  description = "Workflows to observe with Grafana dashboards and OTLP logging"
+  description = "Workflows to observe with Grafana dashboards and OTLP logging. warning_seconds must be less than critical_seconds."
   type = map(object({
-    title = string
-    last_run_started_thresholds = list(object({
-      value = number
-      color = string
-    }))
+    title            = string
+    warning_seconds  = number
+    critical_seconds = number
   }))
   default = {}
+}
+
+variable "grafana_folder_uid" {
+  description = "The UID of the Grafana folder for dashboards and alert rules"
+  type        = string
+  default     = null
+}
+
+variable "grafana_loki_datasource_uid" {
+  description = "The UID of the Grafana Loki datasource for alert rule queries"
+  type        = string
+  default     = null
 }

@@ -32,14 +32,14 @@ module "repo_renovate" {
 
   observe_workflows = {
     "renovate.yml" = {
-      title = "Scheduled maintenance runs for ghalactic/renovate"
-      last_run_started_thresholds = [
-        { value = 0, color = module.constants.grafana_threshold_colors.green },
-        { value = 5400, color = module.constants.grafana_threshold_colors.yellow },
-        { value = 7200, color = module.constants.grafana_threshold_colors.red },
-      ]
+      title            = "Scheduled maintenance runs for ghalactic/renovate"
+      warning_seconds  = 5400
+      critical_seconds = 7200
     }
   }
+
+  grafana_folder_uid          = grafana_folder.actions.uid
+  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
 }
 
 module "repo_token_provider" {
@@ -49,12 +49,12 @@ module "repo_token_provider" {
 
   observe_workflows = {
     "provision-tokens.yml" = {
-      title = "Scheduled token provisioning runs for ghalactic/token-provider"
-      last_run_started_thresholds = [
-        { value = 0, color = module.constants.grafana_threshold_colors.green },
-        { value = 2700, color = module.constants.grafana_threshold_colors.yellow },
-        { value = 3600, color = module.constants.grafana_threshold_colors.red },
-      ]
+      title            = "Scheduled token provisioning runs for ghalactic/token-provider"
+      warning_seconds  = 2700
+      critical_seconds = 3600
     }
   }
+
+  grafana_folder_uid          = grafana_folder.actions.uid
+  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
 }
