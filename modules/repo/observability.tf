@@ -73,6 +73,7 @@ resource "grafana_dashboard" "observed_workflow" {
     replace(
       replace(
         templatefile("grafana/dashboard.json", {
+          dashboard_uid = "gha-${var.name}-${replace(each.key, ".", "-")}"
           title         = each.value.title
           repo          = var.name
           workflow      = local.workflow_names[each.key]

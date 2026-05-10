@@ -2,7 +2,7 @@
   "apiVersion": "dashboard.grafana.app/v2",
   "kind": "Dashboard",
   "metadata": {
-    "name": "gha-${repo}-${workflow_file}"
+    "name": "${dashboard_uid}"
   },
   "spec": {
     "annotations": [
