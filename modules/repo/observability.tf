@@ -99,6 +99,71 @@ resource "grafana_dashboard_public" "observed_workflow" {
   time_selection_enabled = true
 }
 
+resource "grafana_rule_group" "observed_workflow" {
+  for_each = var.observe_workflows
+
+  name             = "${var.name}/${each.key}"
+  folder_uid       = var.grafana_folder_uid
+  interval_seconds = 300
+
+  rule {
+    name      = "${local.workflow_names[each.key]} in ${var.name}"
+    condition = "threshold"
+
+    data {
+      ref_id         = "runs"
+      datasource_uid = var.grafana_loki_datasource_uid
+
+      relative_time_range {
+        from = each.value.critical_seconds
+        to   = 0
+      }
+
+      model = jsonencode({
+        expr      = "count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${var.name}\" | workflow=\"${local.workflow_names[each.key]}\" | trigger=\"schedule\" [${each.value.critical_seconds}s])"
+        queryType = "range"
+        refId     = "runs"
+      })
+    }
+
+    data {
+      ref_id         = "threshold"
+      datasource_uid = "__expr__"
+
+      relative_time_range {
+        from = 0
+        to   = 0
+      }
+
+      model = jsonencode({
+        type       = "threshold"
+        expression = "runs"
+        refId      = "threshold"
+        conditions = [
+          {
+            type = "query"
+            evaluator = {
+              type   = "lt"
+              params = [1]
+            }
+          }
+        ]
+      })
+    }
+
+    labels = {
+      repo     = var.name
+      workflow = local.workflow_names[each.key]
+    }
+
+    annotations = {
+      summary = "No scheduled run of ${local.workflow_names[each.key]} in ${var.name} for over ${each.value.critical_seconds} seconds"
+    }
+
+    for = "0s"
+  }
+}
+
 output "workflow_dashboard_public_urls" {
   description = "A map of observed workflow names to their public Grafana dashboard URLs."
   value = {
