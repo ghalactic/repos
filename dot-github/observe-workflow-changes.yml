@@ -1,0 +1,12 @@
+name: Observe workflow changes
+
+on:
+  push:
+    paths: ${paths_json}
+    branches: [main]
+
+jobs:
+  report:
+    name: Ghalactic
+    uses: ghalactic/repos/.github/workflows/shared-observe-workflow-changes.yml@main
+    secrets: inherit

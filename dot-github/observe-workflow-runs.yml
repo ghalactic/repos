@@ -1,0 +1,12 @@
+name: Observe workflow runs
+
+on:
+  workflow_run:
+    workflows: ${workflows_json}
+    types: [requested, completed]
+
+jobs:
+  report:
+    name: Ghalactic
+    uses: ghalactic/repos/.github/workflows/shared-observe-workflow-runs.yml@main
+    secrets: inherit
