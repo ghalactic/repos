@@ -1,0 +1,436 @@
+{"@level":"info","@message":"Terraform 1.14.9","@module":"terraform.ui","@timestamp":"2026-05-10T19:14:19.849805+10:00","terraform":"1.14.9","type":"version","ui":"1.2"}
+[0m[33mRunning plan in the remote backend. Output will stream here. Pressing Ctrl-C
+will stop streaming the logs, but will not stop the plan running remotely.[0m
+
+Preparing the remote plan...
+[0m
+[0m[33mTo view this run in a browser, visit:[0m
+[0m[33mhttps://app.terraform.io/app/ghalactic/repos/runs/run-Xx1iFfjrCuZi1UVG[0m
+[0m
+Waiting for the plan to start...
+
+Terraform v1.15.2
+on linux_amd64
+Initializing plugins and modules...
+[0m[1mdata.grafana_cloud_organization.this: Reading...[0m[0m
+[0m[1mgrafana_cloud_stack.this: Refreshing state... [id=1630046][0m
+[0m[1mdata.grafana_cloud_organization.this: Read complete after 0s [id=1760650][0m
+[0m[1mgrafana_cloud_access_policy.github_actions: Refreshing state... [id=us:706a8676-34b4-4f90-b7ad-54d198d09312][0m
+[0m[1mmodule.repo_branding.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mmodule.repo_token_provider.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mmodule.repo_provision_github_tokens.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mmodule.repo_renovate.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mmodule.repo_token_provider.github_repository.this: Refreshing state... [id=token-provider][0m
+[0m[1mmodule.repo_renovate.github_repository.this: Refreshing state... [id=renovate][0m
+[0m[1mmodule.repo_action_template.github_repository.this: Refreshing state... [id=action-template][0m
+[0m[1mgithub_issue_labels.repos: Refreshing state... [id=repos][0m
+[0m[1mmodule.repo_vale_style.github_repository.this: Refreshing state... [id=vale-style][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_repository.this: Refreshing state... [id=ghalactic.github.io][0m
+[0m[1mmodule.repo_branding.github_repository.this: Refreshing state... [id=branding][0m
+[0m[1mmodule.repo_vale_style.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mmodule.repo_token_provider.data.github_repository_file.observed_workflow["provision-tokens.yml"]: Reading...[0m[0m
+[0m[1mmodule.repo_org_dot_github_dot_io.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mmodule.repo_provision_github_tokens.github_repository.this: Refreshing state... [id=provision-github-tokens][0m
+[0m[1mmodule.repo_provision_github_tokens.data.github_team.renovate_reviewers: Read complete after 3s [id=8433545][0m
+[0m[1mmodule.repo_action_template.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mmodule.repo_branding.data.github_team.renovate_reviewers: Read complete after 3s [id=8433545][0m
+[0m[1mmodule.repo_github_release_from_tag.github_repository.this: Refreshing state... [id=github-release-from-tag][0m
+[0m[1mmodule.repo_token_provider.data.github_team.renovate_reviewers: Read complete after 4s [id=8433545][0m
+[0m[1mmodule.repo_renovate.data.github_repository_file.observed_workflow["renovate.yml"]: Reading...[0m[0m
+[0m[1mmodule.repo_renovate.data.github_team.renovate_reviewers: Read complete after 4s [id=8433545][0m
+[0m[1mmodule.repo_github_release_from_tag.data.github_team.renovate_reviewers: Reading...[0m[0m
+[0m[1mgrafana_cloud_access_policy_token.github_actions_workflows: Refreshing state... [id=us:ce8f641a-764c-4675-9e82-213441891337][0m
+[0m[1mgrafana_cloud_stack_service_account.this: Refreshing state... [id=ghalactic:15][0m
+[0m[1mgithub_actions_organization_variable.otlp_endpoint: Refreshing state... [id=OTLP_ENDPOINT][0m
+[0m[1mgithub_actions_organization_variable.otlp_username: Refreshing state... [id=OTLP_USERNAME][0m
+[0m[1mmodule.repo_vale_style.data.github_team.renovate_reviewers: Read complete after 5s [id=8433545][0m
+[0m[1mmodule.repo_token_provider.github_actions_repository_permissions.this: Refreshing state... [id=token-provider][0m
+[0m[1mmodule.repo_token_provider.github_issue_labels.this: Refreshing state... [id=token-provider][0m
+[0m[1mmodule.repo_token_provider.data.github_repository_file.observed_workflow["provision-tokens.yml"]: Read complete after 5s [id=token-provider/.github/workflows/provision-tokens.yml][0m
+[0m[1mmodule.repo_token_provider.data.github_repository.this: Reading...[0m[0m
+[0m[1mmodule.repo_org_dot_github_dot_io.data.github_team.renovate_reviewers: Read complete after 6s [id=8433545][0m
+[0m[1mmodule.repo_token_provider.github_repository_file.dot_github_renovate_json[0]: Refreshing state... [id=token-provider:.github/renovate.json:main][0m
+[0m[1mmodule.repo_token_provider.github_repository_vulnerability_alerts.this: Refreshing state... [id=1231884796][0m
+[0m[1mmodule.repo_token_provider.github_repository_file.license: Refreshing state... [id=token-provider:LICENSE:main][0m
+[0m[1mmodule.repo_action_template.data.github_team.renovate_reviewers: Read complete after 5s [id=8433545][0m
+[0m[1mmodule.repo_token_provider.github_repository_file.observe_workflow_changes[0]: Refreshing state... [id=token-provider:.github/workflows/observe-workflow-changes.yml:main][0m
+[0m[1mmodule.repo_renovate.data.github_repository.this: Reading...[0m[0m
+[0m[1mmodule.repo_github_release_from_tag.data.github_team.renovate_reviewers: Read complete after 5s [id=8433545][0m
+[0m[1mmodule.repo_renovate.github_actions_repository_permissions.this: Refreshing state... [id=renovate][0m
+[0m[1mmodule.repo_renovate.github_repository_file.license: Refreshing state... [id=renovate:LICENSE:main][0m
+[0m[1mmodule.repo_renovate.github_repository_vulnerability_alerts.this: Refreshing state... [id=677593587][0m
+[0m[1mmodule.repo_renovate.github_issue_labels.this: Refreshing state... [id=renovate][0m
+[0m[1mmodule.repo_renovate.github_repository_file.observe_workflow_changes[0]: Refreshing state... [id=renovate:.github/workflows/observe-workflow-changes.yml:main][0m
+[0m[1mmodule.repo_action_template.github_actions_repository_permissions.this: Refreshing state... [id=action-template][0m
+[0m[1mmodule.repo_token_provider.data.github_repository.this: Read complete after 3s [id=token-provider][0m
+[0m[1mmodule.repo_action_template.github_issue_labels.this: Refreshing state... [id=action-template][0m
+[0m[1mmodule.repo_action_template.github_repository_file.dot_github_renovate_json[0]: Refreshing state... [id=action-template:.github/renovate.json:main][0m
+[0m[1mmodule.repo_action_template.data.github_repository.this: Reading...[0m[0m
+[0m[1mmodule.repo_action_template.github_repository_vulnerability_alerts.this: Refreshing state... [id=641329058][0m
+[0m[1mmodule.repo_action_template.github_repository_file.license: Refreshing state... [id=action-template:LICENSE:main][0m
+[0m[1mmodule.repo_renovate.data.github_repository.this: Read complete after 3s [id=renovate][0m
+[0m[1mmodule.repo_vale_style.github_actions_repository_permissions.this: Refreshing state... [id=vale-style][0m
+[0m[1mmodule.repo_vale_style.github_repository_vulnerability_alerts.this: Refreshing state... [id=1228375366][0m
+[0m[1mmodule.repo_vale_style.github_repository_file.license: Refreshing state... [id=vale-style:LICENSE:main][0m
+[0m[1mmodule.repo_vale_style.github_issue_labels.this: Refreshing state... [id=vale-style][0m
+[0m[1mmodule.repo_vale_style.data.github_repository.this: Reading...[0m[0m
+[0m[1mmodule.repo_vale_style.github_repository_file.dot_github_renovate_json[0]: Refreshing state... [id=vale-style:.github/renovate.json:main][0m
+[0m[1mmodule.repo_token_provider.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:token-provider][0m
+[0m[1mmodule.repo_renovate.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:renovate][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_repository_file.license: Refreshing state... [id=ghalactic.github.io:LICENSE:main][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_actions_repository_permissions.this: Refreshing state... [id=ghalactic.github.io][0m
+[0m[1mmodule.repo_renovate.data.github_repository_file.observed_workflow["renovate.yml"]: Still reading... [00m10s elapsed][0m[0m
+[0m[1mmodule.repo_action_template.data.github_repository.this: Read complete after 3s [id=action-template][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_repository_vulnerability_alerts.this: Refreshing state... [id=643104569][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_issue_labels.this: Refreshing state... [id=ghalactic.github.io][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_repository_file.dot_github_renovate_json[0]: Refreshing state... [id=ghalactic.github.io:.github/renovate.json:main][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_repository_pages.this["pages"]: Refreshing state... [id=643104569][0m
+[0m[1mgithub_actions_organization_secret.otlp_password: Refreshing state... [id=OTLP_PASSWORD][0m
+[0m[1mgrafana_cloud_stack_service_account_token.this: Refreshing state... [id=13][0m
+[0m[1mmodule.repo_branding.github_repository_file.license: Refreshing state... [id=branding:LICENSE:main][0m
+[0m[1mmodule.repo_vale_style.data.github_repository.this: Read complete after 4s [id=vale-style][0m
+[0m[1mmodule.repo_branding.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:branding][0m
+[0m[1mmodule.repo_branding.github_actions_repository_permissions.this: Refreshing state... [id=branding][0m
+[0m[1mmodule.repo_branding.github_issue_labels.this: Refreshing state... [id=branding][0m
+[0m[1mmodule.repo_branding.github_repository_vulnerability_alerts.this: Refreshing state... [id=641329023][0m
+[0m[1mmodule.repo_renovate.data.github_repository_file.observed_workflow["renovate.yml"]: Read complete after 12s [id=renovate/.github/workflows/renovate.yml][0m
+[0m[1mmodule.repo_branding.github_repository_file.dot_github_renovate_json[0]: Refreshing state... [id=branding:.github/renovate.json:main][0m
+[0m[1mmodule.repo_branding.github_repository_pages.this["pages"]: Refreshing state... [id=641329023][0m
+[0m[1mmodule.repo_vale_style.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:vale-style][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:ghalactic.github.io][0m
+[0m[1mmodule.repo_provision_github_tokens.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:provision-github-tokens][0m
+[0m[1mmodule.repo_provision_github_tokens.github_actions_repository_permissions.this: Refreshing state... [id=provision-github-tokens][0m
+[0m[1mmodule.repo_provision_github_tokens.github_issue_labels.this: Refreshing state... [id=provision-github-tokens][0m
+[0m[1mmodule.repo_provision_github_tokens.github_repository_file.license: Refreshing state... [id=provision-github-tokens:LICENSE:main][0m
+[0m[1mmodule.repo_provision_github_tokens.github_repository_vulnerability_alerts.this: Refreshing state... [id=846888141][0m
+[0m[1mmodule.repo_provision_github_tokens.github_repository_file.dot_github_renovate_json[0]: Refreshing state... [id=provision-github-tokens:.github/renovate.json:main][0m
+[0m[1mmodule.repo_provision_github_tokens.github_repository_pages.this["pages"]: Refreshing state... [id=846888141][0m
+[0m[1mmodule.repo_action_template.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:action-template][0m
+[0m[1mmodule.repo_github_release_from_tag.github_repository_vulnerability_alerts.this: Refreshing state... [id=349258024][0m
+[0m[1mmodule.repo_github_release_from_tag.github_issue_labels.this: Refreshing state... [id=github-release-from-tag][0m
+[0m[1mmodule.repo_github_release_from_tag.github_repository_file.dot_github_renovate_json[0]: Refreshing state... [id=github-release-from-tag:.github/renovate.json:main][0m
+[0m[1mmodule.repo_github_release_from_tag.github_repository_pages.this["pages"]: Refreshing state... [id=349258024][0m
+[0m[1mmodule.repo_github_release_from_tag.github_repository_file.license: Refreshing state... [id=github-release-from-tag:LICENSE:main][0m
+[0m[1mmodule.repo_github_release_from_tag.github_actions_repository_permissions.this: Refreshing state... [id=github-release-from-tag][0m
+[0m[1mmodule.repo_github_release_from_tag.github_team_repository.renovate_reviewers: Refreshing state... [id=8433545:github-release-from-tag][0m
+[0m[1mmodule.repo_token_provider.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOSW0R_M4EkUhm][0m
+[0m[1mmodule.repo_renovate.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOKGNB884CaaQ1][0m
+[0m[1mmodule.repo_action_template.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOJjnnos4CPAKY][0m
+[0m[1mmodule.repo_org_dot_github_dot_io.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOJlT_Oc4CPgdH][0m
+[0m[1mmodule.repo_vale_style.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOSTeFRs4EjpGO][0m
+[0m[1mmodule.repo_branding.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOJjnnf84CPAKS][0m
+[0m[1mmodule.repo_token_provider.github_repository_file.observe_workflow_runs[0]: Refreshing state... [id=token-provider:.github/workflows/observe-workflow-runs.yml:main][0m
+[0m[1mmodule.repo_provision_github_tokens.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOMnp8zc4DMwNn][0m
+[0m[1mmodule.repo_github_release_from_tag.github_branch_protection.default_branch: Refreshing state... [id=BPR_kwDOFNFBKM4BpYoi][0m
+[0m[1mmodule.repo_token_provider.grafana_dashboard.observed_workflow["provision-tokens.yml"]: Refreshing state... [id=0:adq4rd][0m
+[0m[1mmodule.repo_renovate.grafana_dashboard.observed_workflow["renovate.yml"]: Refreshing state... [id=0:a6mzrk][0m
+[0m[1mmodule.repo_renovate.github_repository_file.observe_workflow_runs[0]: Refreshing state... [id=renovate:.github/workflows/observe-workflow-runs.yml:main][0m
+[0m[1mmodule.repo_token_provider.grafana_dashboard_public.observed_workflow["provision-tokens.yml"]: Refreshing state... [id=0:adq4rd:bflml8h74658ha][0m
+[0m[1mmodule.repo_renovate.grafana_dashboard_public.observed_workflow["renovate.yml"]: Refreshing state... [id=0:a6mzrk:bflml8h74658ge][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [33m~[0m update in-place[0m
+ [36m<=[0m read (data resources)[0m
+
+Terraform will perform the following actions:
+
+[1m  # module.repo_branding.data.github_repository.this[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "github_repository" "this" {
+      [32m+[0m[0m allow_auto_merge            = (known after apply)
+      [32m+[0m[0m allow_forking               = (known after apply)
+      [32m+[0m[0m allow_merge_commit          = (known after apply)
+      [32m+[0m[0m allow_rebase_merge          = (known after apply)
+      [32m+[0m[0m allow_squash_merge          = (known after apply)
+      [32m+[0m[0m allow_update_branch         = (known after apply)
+      [32m+[0m[0m archived                    = (known after apply)
+      [32m+[0m[0m default_branch              = (known after apply)
+      [32m+[0m[0m delete_branch_on_merge      = (known after apply)
+      [32m+[0m[0m fork                        = (known after apply)
+      [32m+[0m[0m full_name                   = (known after apply)
+      [32m+[0m[0m git_clone_url               = (known after apply)
+      [32m+[0m[0m has_discussions             = (known after apply)
+      [32m+[0m[0m has_downloads               = (known after apply)
+      [32m+[0m[0m has_issues                  = (known after apply)
+      [32m+[0m[0m has_projects                = (known after apply)
+      [32m+[0m[0m has_wiki                    = (known after apply)
+      [32m+[0m[0m html_url                    = (known after apply)
+      [32m+[0m[0m http_clone_url              = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m is_template                 = (known after apply)
+      [32m+[0m[0m merge_commit_message        = (known after apply)
+      [32m+[0m[0m merge_commit_title          = (known after apply)
+      [32m+[0m[0m name                        = "branding"
+      [32m+[0m[0m node_id                     = (known after apply)
+      [32m+[0m[0m pages                       = (known after apply)
+      [32m+[0m[0m primary_language            = (known after apply)
+      [32m+[0m[0m private                     = (known after apply)
+      [32m+[0m[0m repo_id                     = (known after apply)
+      [32m+[0m[0m repository_license          = (known after apply)
+      [32m+[0m[0m squash_merge_commit_message = (known after apply)
+      [32m+[0m[0m squash_merge_commit_title   = (known after apply)
+      [32m+[0m[0m ssh_clone_url               = (known after apply)
+      [32m+[0m[0m svn_url                     = (known after apply)
+      [32m+[0m[0m template                    = (known after apply)
+      [32m+[0m[0m topics                      = (known after apply)
+      [32m+[0m[0m visibility                  = (known after apply)
+    }
+
+[1m  # module.repo_branding.github_branch_protection.default_branch[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_branch_protection" "default_branch" {
+        id                              = "BPR_kwDOJjnnf84CPAKS"
+      [33m~[0m[0m pattern                         = "main" -> (known after apply)
+        [90m# (9 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.repo_branding.github_repository.this[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_repository" "this" {
+        id                                      = "branding"
+      [32m+[0m[0m ignore_vulnerability_alerts_during_read = false
+        name                                    = "branding"
+        [90m# (41 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m pages {
+          [31m-[0m[0m build_type = "legacy" [90m-> null[0m[0m
+          [31m-[0m[0m custom_404 = false [90m-> null[0m[0m
+          [31m-[0m[0m html_url   = "https://ghalactic.github.io/branding/" [90m-> null[0m[0m
+          [31m-[0m[0m status     = "built" [90m-> null[0m[0m
+          [31m-[0m[0m url        = "https://api.github.com/repos/ghalactic/branding/pages" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+
+          [31m-[0m[0m source {
+              [31m-[0m[0m branch = "gh-pages" [90m-> null[0m[0m
+              [31m-[0m[0m path   = "/" [90m-> null[0m[0m
+            }
+        }
+
+        [90m# (1 unchanged block hidden)[0m[0m
+    }
+
+[1m  # module.repo_github_release_from_tag.data.github_repository.this[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "github_repository" "this" {
+      [32m+[0m[0m allow_auto_merge            = (known after apply)
+      [32m+[0m[0m allow_forking               = (known after apply)
+      [32m+[0m[0m allow_merge_commit          = (known after apply)
+      [32m+[0m[0m allow_rebase_merge          = (known after apply)
+      [32m+[0m[0m allow_squash_merge          = (known after apply)
+      [32m+[0m[0m allow_update_branch         = (known after apply)
+      [32m+[0m[0m archived                    = (known after apply)
+      [32m+[0m[0m default_branch              = (known after apply)
+      [32m+[0m[0m delete_branch_on_merge      = (known after apply)
+      [32m+[0m[0m fork                        = (known after apply)
+      [32m+[0m[0m full_name                   = (known after apply)
+      [32m+[0m[0m git_clone_url               = (known after apply)
+      [32m+[0m[0m has_discussions             = (known after apply)
+      [32m+[0m[0m has_downloads               = (known after apply)
+      [32m+[0m[0m has_issues                  = (known after apply)
+      [32m+[0m[0m has_projects                = (known after apply)
+      [32m+[0m[0m has_wiki                    = (known after apply)
+      [32m+[0m[0m html_url                    = (known after apply)
+      [32m+[0m[0m http_clone_url              = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m is_template                 = (known after apply)
+      [32m+[0m[0m merge_commit_message        = (known after apply)
+      [32m+[0m[0m merge_commit_title          = (known after apply)
+      [32m+[0m[0m name                        = "github-release-from-tag"
+      [32m+[0m[0m node_id                     = (known after apply)
+      [32m+[0m[0m pages                       = (known after apply)
+      [32m+[0m[0m primary_language            = (known after apply)
+      [32m+[0m[0m private                     = (known after apply)
+      [32m+[0m[0m repo_id                     = (known after apply)
+      [32m+[0m[0m repository_license          = (known after apply)
+      [32m+[0m[0m squash_merge_commit_message = (known after apply)
+      [32m+[0m[0m squash_merge_commit_title   = (known after apply)
+      [32m+[0m[0m ssh_clone_url               = (known after apply)
+      [32m+[0m[0m svn_url                     = (known after apply)
+      [32m+[0m[0m template                    = (known after apply)
+      [32m+[0m[0m topics                      = (known after apply)
+      [32m+[0m[0m visibility                  = (known after apply)
+    }
+
+[1m  # module.repo_github_release_from_tag.github_branch_protection.default_branch[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_branch_protection" "default_branch" {
+        id                              = "BPR_kwDOFNFBKM4BpYoi"
+      [33m~[0m[0m pattern                         = "main" -> (known after apply)
+        [90m# (9 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.repo_github_release_from_tag.github_repository.this[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_repository" "this" {
+        id                                      = "github-release-from-tag"
+      [32m+[0m[0m ignore_vulnerability_alerts_during_read = false
+        name                                    = "github-release-from-tag"
+        [90m# (41 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m pages {
+          [31m-[0m[0m build_type = "legacy" [90m-> null[0m[0m
+          [31m-[0m[0m custom_404 = false [90m-> null[0m[0m
+          [31m-[0m[0m html_url   = "https://ghalactic.github.io/github-release-from-tag/" [90m-> null[0m[0m
+          [31m-[0m[0m status     = "built" [90m-> null[0m[0m
+          [31m-[0m[0m url        = "https://api.github.com/repos/ghalactic/github-release-from-tag/pages" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+
+          [31m-[0m[0m source {
+              [31m-[0m[0m branch = "gh-pages" [90m-> null[0m[0m
+              [31m-[0m[0m path   = "/" [90m-> null[0m[0m
+            }
+        }
+
+        [90m# (1 unchanged block hidden)[0m[0m
+    }
+
+[1m  # module.repo_org_dot_github_dot_io.data.github_repository.this[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "github_repository" "this" {
+      [32m+[0m[0m allow_auto_merge            = (known after apply)
+      [32m+[0m[0m allow_forking               = (known after apply)
+      [32m+[0m[0m allow_merge_commit          = (known after apply)
+      [32m+[0m[0m allow_rebase_merge          = (known after apply)
+      [32m+[0m[0m allow_squash_merge          = (known after apply)
+      [32m+[0m[0m allow_update_branch         = (known after apply)
+      [32m+[0m[0m archived                    = (known after apply)
+      [32m+[0m[0m default_branch              = (known after apply)
+      [32m+[0m[0m delete_branch_on_merge      = (known after apply)
+      [32m+[0m[0m fork                        = (known after apply)
+      [32m+[0m[0m full_name                   = (known after apply)
+      [32m+[0m[0m git_clone_url               = (known after apply)
+      [32m+[0m[0m has_discussions             = (known after apply)
+      [32m+[0m[0m has_downloads               = (known after apply)
+      [32m+[0m[0m has_issues                  = (known after apply)
+      [32m+[0m[0m has_projects                = (known after apply)
+      [32m+[0m[0m has_wiki                    = (known after apply)
+      [32m+[0m[0m html_url                    = (known after apply)
+      [32m+[0m[0m http_clone_url              = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m is_template                 = (known after apply)
+      [32m+[0m[0m merge_commit_message        = (known after apply)
+      [32m+[0m[0m merge_commit_title          = (known after apply)
+      [32m+[0m[0m name                        = "ghalactic.github.io"
+      [32m+[0m[0m node_id                     = (known after apply)
+      [32m+[0m[0m pages                       = (known after apply)
+      [32m+[0m[0m primary_language            = (known after apply)
+      [32m+[0m[0m private                     = (known after apply)
+      [32m+[0m[0m repo_id                     = (known after apply)
+      [32m+[0m[0m repository_license          = (known after apply)
+      [32m+[0m[0m squash_merge_commit_message = (known after apply)
+      [32m+[0m[0m squash_merge_commit_title   = (known after apply)
+      [32m+[0m[0m ssh_clone_url               = (known after apply)
+      [32m+[0m[0m svn_url                     = (known after apply)
+      [32m+[0m[0m template                    = (known after apply)
+      [32m+[0m[0m topics                      = (known after apply)
+      [32m+[0m[0m visibility                  = (known after apply)
+    }
+
+[1m  # module.repo_org_dot_github_dot_io.github_branch_protection.default_branch[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_branch_protection" "default_branch" {
+        id                              = "BPR_kwDOJlT_Oc4CPgdH"
+      [33m~[0m[0m pattern                         = "main" -> (known after apply)
+        [90m# (9 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.repo_org_dot_github_dot_io.github_repository.this[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_repository" "this" {
+        id                                      = "ghalactic.github.io"
+      [32m+[0m[0m ignore_vulnerability_alerts_during_read = false
+        name                                    = "ghalactic.github.io"
+        [90m# (41 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m pages {
+          [31m-[0m[0m build_type = "legacy" [90m-> null[0m[0m
+          [31m-[0m[0m custom_404 = false [90m-> null[0m[0m
+          [31m-[0m[0m html_url   = "https://ghalactic.github.io/" [90m-> null[0m[0m
+          [31m-[0m[0m status     = "built" [90m-> null[0m[0m
+          [31m-[0m[0m url        = "https://api.github.com/repos/ghalactic/ghalactic.github.io/pages" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+
+          [31m-[0m[0m source {
+              [31m-[0m[0m branch = "main" [90m-> null[0m[0m
+              [31m-[0m[0m path   = "/" [90m-> null[0m[0m
+            }
+        }
+
+        [90m# (1 unchanged block hidden)[0m[0m
+    }
+
+[1m  # module.repo_provision_github_tokens.data.github_repository.this[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "github_repository" "this" {
+      [32m+[0m[0m allow_auto_merge            = (known after apply)
+      [32m+[0m[0m allow_forking               = (known after apply)
+      [32m+[0m[0m allow_merge_commit          = (known after apply)
+      [32m+[0m[0m allow_rebase_merge          = (known after apply)
+      [32m+[0m[0m allow_squash_merge          = (known after apply)
+      [32m+[0m[0m allow_update_branch         = (known after apply)
+      [32m+[0m[0m archived                    = (known after apply)
+      [32m+[0m[0m default_branch              = (known after apply)
+      [32m+[0m[0m delete_branch_on_merge      = (known after apply)
+      [32m+[0m[0m fork                        = (known after apply)
+      [32m+[0m[0m full_name                   = (known after apply)
+      [32m+[0m[0m git_clone_url               = (known after apply)
+      [32m+[0m[0m has_discussions             = (known after apply)
+      [32m+[0m[0m has_downloads               = (known after apply)
+      [32m+[0m[0m has_issues                  = (known after apply)
+      [32m+[0m[0m has_projects                = (known after apply)
+      [32m+[0m[0m has_wiki                    = (known after apply)
+      [32m+[0m[0m html_url                    = (known after apply)
+      [32m+[0m[0m http_clone_url              = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m is_template                 = (known after apply)
+      [32m+[0m[0m merge_commit_message        = (known after apply)
+      [32m+[0m[0m merge_commit_title          = (known after apply)
+      [32m+[0m[0m name                        = "provision-github-tokens"
+      [32m+[0m[0m node_id                     = (known after apply)
+      [32m+[0m[0m pages                       = (known after apply)
+      [32m+[0m[0m primary_language            = (known after apply)
+      [32m+[0m[0m private                     = (known after apply)
+      [32m+[0m[0m repo_id                     = (known after apply)
+      [32m+[0m[0m repository_license          = (known after apply)
+      [32m+[0m[0m squash_merge_commit_message = (known after apply)
+      [32m+[0m[0m squash_merge_commit_title   = (known after apply)
+      [32m+[0m[0m ssh_clone_url               = (known after apply)
+      [32m+[0m[0m svn_url                     = (known after apply)
+      [32m+[0m[0m template                    = (known after apply)
+      [32m+[0m[0m topics                      = (known after apply)
+      [32m+[0m[0m visibility                  = (known after apply)
+    }
+
+[1m  # module.repo_provision_github_tokens.github_branch_protection.default_branch[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_branch_protection" "default_branch" {
+        id                              = "BPR_kwDOMnp8zc4DMwNn"
+      [33m~[0m[0m pattern                         = "main" -> (known after apply)
+        [90m# (9 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.repo_provision_github_tokens.github_repository.this[0m will be updated in-place
+[0m  [33m~[0m[0m resource "github_repository" "this" {
+        id                                      = "provision-github-tokens"
+        name                                    = "provision-github-tokens"
+        [90m# (42 unchanged attributes hidden)[0m[0m
+
+      [31m-[0m[0m pages {
+          [31m-[0m[0m build_type = "legacy" [90m-> null[0m[0m
+          [31m-[0m[0m custom_404 = false [90m-> null[0m[0m
+          [31m-[0m[0m html_url   = "https://ghalactic.github.io/provision-github-tokens/" [90m-> null[0m[0m
+          [31m-[0m[0m status     = "built" [90m-> null[0m[0m
+          [31m-[0m[0m url        = "https://api.github.com/repos/ghalactic/provision-github-tokens/pages" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+
+          [31m-[0m[0m source {
+              [31m-[0m[0m branch = "gh-pages" [90m-> null[0m[0m
+              [31m-[0m[0m path   = "/" [90m-> null[0m[0m
+            }
+        }
+
+        [90m# (2 unchanged blocks hidden)[0m[0m
+    }
+
+[1mPlan:[0m [0m0 to add, 8 to change, 0 to destroy.
+
+------------------------------------------------------------------------
+
+Cost estimation:
+
+Resources: 0 of 84 estimated
+           $0.0/mo +$0.0
