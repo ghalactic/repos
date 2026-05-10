@@ -83,3 +83,15 @@ variable "use_release_action_main" {
   type        = bool
   default     = false
 }
+
+variable "observe_workflows" {
+  description = "Workflows to observe with Grafana dashboards and OTLP logging"
+  type = map(object({
+    title = string
+    last_run_started_thresholds = list(object({
+      value = number
+      color = string
+    }))
+  }))
+  default = {}
+}
