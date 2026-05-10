@@ -635,34 +635,12 @@
                       "spec": {
                         "direction": "backward",
                         "editorMode": "code",
-                        "expr": "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__WARNING_THRESHOLD_SECONDS__s]))",
+                        "expr": "clamp_max(sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__WARNING_THRESHOLD_SECONDS__s])), 1) + clamp_max(sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__CRITICAL_THRESHOLD_SECONDS__s])), 1)",
                         "queryType": "range",
-                        "legendFormat": "warning"
+                        "legendFormat": "health"
                       }
                     },
                     "refId": "A",
-                    "hidden": false
-                  }
-                },
-                {
-                  "kind": "PanelQuery",
-                  "spec": {
-                    "query": {
-                      "kind": "DataQuery",
-                      "group": "loki",
-                      "version": "v0",
-                      "datasource": {
-                        "name": "grafanacloud-logs"
-                      },
-                      "spec": {
-                        "direction": "backward",
-                        "editorMode": "code",
-                        "expr": "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__CRITICAL_THRESHOLD_SECONDS__s]))",
-                        "queryType": "range",
-                        "legendFormat": "critical"
-                      }
-                    },
-                    "refId": "B",
                     "hidden": false
                   }
                 }
@@ -701,6 +679,10 @@
                       },
                       {
                         "value": 1,
+                        "color": "#EAB839"
+                      },
+                      {
+                        "value": 2,
                         "color": "green"
                       }
                     ]
@@ -715,15 +697,12 @@
                         "0": {
                           "text": "Missing",
                           "color": "red"
-                        }
-                      }
-                    },
-                    {
-                      "type": "range",
-                      "options": {
-                        "from": 1,
-                        "to": 999999,
-                        "result": {
+                        },
+                        "1": {
+                          "text": "Delayed",
+                          "color": "#EAB839"
+                        },
+                        "2": {
                           "text": "Healthy",
                           "color": "green"
                         }
@@ -735,41 +714,7 @@
                     "lineWidth": 0
                   }
                 },
-                "overrides": [
-                  {
-                    "matcher": {
-                      "id": "byName",
-                      "options": "warning"
-                    },
-                    "properties": [
-                      {
-                        "id": "mappings",
-                        "value": [
-                          {
-                            "type": "value",
-                            "options": {
-                              "0": {
-                                "text": "Delayed",
-                                "color": "#EAB839"
-                              }
-                            }
-                          },
-                          {
-                            "type": "range",
-                            "options": {
-                              "from": 1,
-                              "to": 999999,
-                              "result": {
-                                "text": "Healthy",
-                                "color": "green"
-                              }
-                            }
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "overrides": []
               }
             }
           }
@@ -838,7 +783,7 @@
               "x": 0,
               "y": 12,
               "width": 24,
-              "height": 10,
+              "height": 7,
               "element": {
                 "kind": "ElementReference",
                 "name": "panel-4"
