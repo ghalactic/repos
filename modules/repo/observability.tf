@@ -61,3 +61,25 @@ resource "grafana_dashboard" "observed_workflow" {
     last_run_started_thresholds = jsonencode(each.value.last_run_started_thresholds)
   })
 }
+
+resource "grafana_dashboard_public" "observed_workflow" {
+  for_each = var.observe_workflows
+
+  dashboard_uid = grafana_dashboard.observed_workflow[each.key].uid
+
+  annotations_enabled    = true
+  is_enabled             = true
+  time_selection_enabled = true
+}
+
+output "workflow_dashboard_public_urls" {
+  description = "A map of observed workflow names to their public Grafana dashboard URLs."
+  value = {
+    for file, config in var.observe_workflows :
+    local.workflow_names[file] => format(
+      "%s/public-dashboards/%s",
+      join("/", slice(split("/", grafana_dashboard.observed_workflow[file].url), 0, 3)),
+      grafana_dashboard_public.observed_workflow[file].access_token
+    )
+  }
+}
