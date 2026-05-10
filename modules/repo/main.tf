@@ -34,10 +34,6 @@ resource "github_repository" "this" {
   }
 }
 
-import {
-  to = github_repository_vulnerability_alerts.this
-  id = var.name
-}
 resource "github_repository_vulnerability_alerts" "this" {
   repository = github_repository.this.name
   enabled    = true
