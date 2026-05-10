@@ -69,3 +69,11 @@ resource "github_actions_organization_secret" "otlp_password" {
   value       = grafana_cloud_access_policy_token.github_actions_workflows.token
   visibility  = "all"
 }
+
+resource "grafana_folder" "actions" {
+  title = "GitHub Actions"
+}
+
+data "grafana_data_source" "loki" {
+  name = "grafanacloud-ghalactic-logs"
+}
