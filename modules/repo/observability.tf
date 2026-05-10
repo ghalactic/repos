@@ -76,7 +76,7 @@ output "workflow_dashboard_public_urls" {
   description = "A map of observed workflow names to their public Grafana dashboard URLs."
   value = {
     for file, config in var.observe_workflows :
-    local.workflow_names[file] => format(
+    file => format(
       "%s/public-dashboards/%s",
       join("/", slice(split("/", grafana_dashboard.observed_workflow[file].url), 0, 3)),
       grafana_dashboard_public.observed_workflow[file].access_token
