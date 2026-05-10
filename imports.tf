@@ -22,10 +22,11 @@ import {
   id = "OTLP_USERNAME"
 }
 
-import {
-  to = github_actions_organization_secret.otlp_password
-  id = "OTLP_PASSWORD"
-}
+# Phase 2: Uncomment after service account is created
+# import {
+#   to = github_actions_organization_secret.otlp_password
+#   id = "OTLP_PASSWORD"
+# }
 
 # Per-repo observer workflow files (token-provider)
 
@@ -53,12 +54,13 @@ import {
 
 # Grafana dashboards
 
-import {
-  to = module.repo_token_provider.grafana_dashboard.observed_workflow["provision-tokens.yml"]
-  id = "9296af63-be53-4e21-a4e6-c58be5228b49"
-}
-
-import {
-  to = module.repo_renovate.grafana_dashboard.observed_workflow["renovate.yml"]
-  id = "fad372cb-618a-4fc6-b709-d4ab912ed8db"
-}
+# Phase 2: Uncomment after service account is created
+# import {
+#   to = module.repo_token_provider.grafana_dashboard.observed_workflow["provision-tokens.yml"]
+#   id = "9296af63-be53-4e21-a4e6-c58be5228b49"
+# }
+#
+# import {
+#   to = module.repo_renovate.grafana_dashboard.observed_workflow["renovate.yml"]
+#   id = "fad372cb-618a-4fc6-b709-d4ab912ed8db"
+# }

@@ -27,14 +27,15 @@ resource "grafana_cloud_access_policy" "github_actions" {
   }
 }
 
-resource "grafana_cloud_access_policy_token" "github_actions_workflows" {
-  provider = grafana.cloud
-
-  name             = "github-actions-workflows"
-  display_name     = "Workflows"
-  region           = "us"
-  access_policy_id = grafana_cloud_access_policy.github_actions.policy_id
-}
+# Phase 2: Uncomment after service account is created
+# resource "grafana_cloud_access_policy_token" "github_actions_workflows" {
+#   provider = grafana.cloud
+#
+#   name             = "github-actions-workflows"
+#   display_name     = "Workflows"
+#   region           = "us"
+#   access_policy_id = grafana_cloud_access_policy.github_actions.policy_id
+# }
 
 resource "grafana_cloud_stack_service_account" "this" {
   provider = grafana.cloud
@@ -64,8 +65,9 @@ resource "github_actions_organization_variable" "otlp_username" {
   visibility    = "all"
 }
 
-resource "github_actions_organization_secret" "otlp_password" {
-  secret_name = "OTLP_PASSWORD"
-  value       = grafana_cloud_access_policy_token.github_actions_workflows.token
-  visibility  = "all"
-}
+# Phase 2: Uncomment after service account is created
+# resource "github_actions_organization_secret" "otlp_password" {
+#   secret_name = "OTLP_PASSWORD"
+#   value       = grafana_cloud_access_policy_token.github_actions_workflows.token
+#   visibility  = "all"
+# }
