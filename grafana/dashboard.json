@@ -104,9 +104,7 @@
                 "orientation": "auto",
                 "percentChangeColorMode": "standard",
                 "reduceOptions": {
-                  "calcs": [
-                    "lastNotNull"
-                  ],
+                  "calcs": ["lastNotNull"],
                   "fields": "",
                   "values": false
                 },
@@ -123,7 +121,7 @@
                   "decimals": 1,
                   "thresholds": {
                     "mode": "absolute",
-                    "steps": ${last_run_started_thresholds}
+                    "steps": "__LAST_RUN_STARTED_THRESHOLDS__"
                   },
                   "color": {
                     "mode": "thresholds"
