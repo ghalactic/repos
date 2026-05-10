@@ -58,7 +58,7 @@ resource "github_actions_organization_variable" "otlp_username" {
 }
 
 resource "github_actions_organization_secret" "otlp_password" {
-  secret_name     = "OTLP_PASSWORD"
-  plaintext_value = grafana_cloud_access_policy_token.workflow_observability.token
-  visibility      = "all"
+  secret_name = "OTLP_PASSWORD"
+  value       = grafana_cloud_access_policy_token.workflow_observability.token
+  visibility  = "all"
 }
