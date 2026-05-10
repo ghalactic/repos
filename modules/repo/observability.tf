@@ -121,7 +121,7 @@ resource "grafana_rule_group" "observed_workflow" {
       }
 
       model = jsonencode({
-        expr      = "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${var.name}\" | workflow=\"${local.workflow_names[each.key]}\" | trigger=\"schedule\" [${each.value.critical_seconds}s]))"
+        expr      = "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${var.name}\" | workflow=\"${local.workflow_names[each.key]}\" | trigger=\"schedule\" [${each.value.critical_seconds}s])) or vector(0)"
         queryType = "range"
         refId     = "runs"
       })
@@ -142,7 +142,8 @@ resource "grafana_rule_group" "observed_workflow" {
         refId      = "reduced"
         reducer    = "last"
         settings = {
-          mode = "dropNN"
+          mode             = "replaceNN"
+          replaceWithValue = 0
         }
       })
     }
