@@ -70,23 +70,15 @@ resource "grafana_dashboard" "observed_workflow" {
   folder = var.grafana_folder_uid
 
   config_json = replace(
-    replace(
-      replace(
-        templatefile("grafana/dashboard.json", {
-          dashboard_uid = "gha-${var.name}-${replace(each.key, ".", "-")}"
-          title         = each.value.title
-          repo          = var.name
-          workflow      = local.workflow_names[each.key]
-          workflow_file = each.key
-        }),
-        "\"__LAST_RUN_STARTED_THRESHOLDS__\"",
-        jsonencode(local.last_run_started_thresholds[each.key])
-      ),
-      "__WARNING_THRESHOLD_SECONDS__",
-      tostring(each.value.warning_seconds)
-    ),
-    "__CRITICAL_THRESHOLD_SECONDS__",
-    tostring(each.value.critical_seconds)
+    templatefile("grafana/dashboard.json", {
+      dashboard_uid = "gha-${var.name}-${replace(each.key, ".", "-")}"
+      title         = each.value.title
+      repo          = var.name
+      workflow      = local.workflow_names[each.key]
+      workflow_file = each.key
+    }),
+    "\"__LAST_RUN_STARTED_THRESHOLDS__\"",
+    jsonencode(local.last_run_started_thresholds[each.key])
   )
 }
 
@@ -98,92 +90,6 @@ resource "grafana_dashboard_public" "observed_workflow" {
   annotations_enabled    = true
   is_enabled             = true
   time_selection_enabled = true
-}
-
-resource "grafana_rule_group" "observed_workflow" {
-  for_each = var.observe_workflows
-
-  name             = "${var.name}/${each.key}"
-  folder_uid       = var.grafana_folder_uid
-  interval_seconds = 300
-
-  rule {
-    name      = "${local.workflow_names[each.key]} in ${var.name}"
-    condition = "threshold"
-
-    data {
-      ref_id         = "runs"
-      datasource_uid = var.grafana_loki_datasource_uid
-
-      relative_time_range {
-        from = each.value.critical_seconds
-        to   = 0
-      }
-
-      model = jsonencode({
-        expr      = "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${var.name}\" | workflow=\"${local.workflow_names[each.key]}\" | trigger=\"schedule\" [${each.value.critical_seconds}s])) or vector(0)"
-        queryType = "range"
-        refId     = "runs"
-      })
-    }
-
-    data {
-      ref_id         = "reduced"
-      datasource_uid = "__expr__"
-
-      relative_time_range {
-        from = 0
-        to   = 0
-      }
-
-      model = jsonencode({
-        type       = "reduce"
-        expression = "runs"
-        refId      = "reduced"
-        reducer    = "last"
-        settings = {
-          mode             = "replaceNN"
-          replaceWithValue = 0
-        }
-      })
-    }
-
-    data {
-      ref_id         = "threshold"
-      datasource_uid = "__expr__"
-
-      relative_time_range {
-        from = 0
-        to   = 0
-      }
-
-      model = jsonencode({
-        type       = "threshold"
-        expression = "reduced"
-        refId      = "threshold"
-        conditions = [
-          {
-            type = "query"
-            evaluator = {
-              type   = "lt"
-              params = [1]
-            }
-          }
-        ]
-      })
-    }
-
-    labels = {
-      repo     = var.name
-      workflow = local.workflow_names[each.key]
-    }
-
-    annotations = {
-      summary = "No scheduled run of ${local.workflow_names[each.key]} in ${var.name} for over ${each.value.critical_seconds} seconds"
-    }
-
-    for = "0s"
-  }
 }
 
 output "workflow_dashboard_public_urls" {

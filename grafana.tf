@@ -73,7 +73,3 @@ resource "github_actions_organization_secret" "otlp_password" {
 resource "grafana_folder" "actions" {
   title = "GitHub Actions"
 }
-
-data "grafana_data_source" "loki" {
-  name = "grafanacloud-ghalactic-logs"
-}

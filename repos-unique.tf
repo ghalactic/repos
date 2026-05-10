@@ -30,8 +30,7 @@ module "repo_renovate" {
 
   manage_renovate = false
 
-  grafana_folder_uid          = grafana_folder.actions.uid
-  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
+  grafana_folder_uid = grafana_folder.actions.uid
 
   observe_workflows = {
     "renovate.yml" = {
@@ -47,8 +46,7 @@ module "repo_token_provider" {
   name        = "token-provider"
   description = "Provisions GitHub tokens for Ghalactic"
 
-  grafana_folder_uid          = grafana_folder.actions.uid
-  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
+  grafana_folder_uid = grafana_folder.actions.uid
 
   observe_workflows = {
     "provision-tokens.yml" = {

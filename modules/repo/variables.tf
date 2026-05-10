@@ -95,23 +95,12 @@ variable "observe_workflows" {
 }
 
 variable "grafana_folder_uid" {
-  description = "The UID of the Grafana folder for dashboards and alert rules"
+  description = "The UID of the Grafana folder for dashboards"
   type        = string
   default     = null
 
   validation {
     condition     = var.grafana_folder_uid != null || length(var.observe_workflows) == 0
     error_message = "grafana_folder_uid is required when observe_workflows is non-empty."
-  }
-}
-
-variable "grafana_loki_datasource_uid" {
-  description = "The UID of the Grafana Loki datasource for alert rule queries"
-  type        = string
-  default     = null
-
-  validation {
-    condition     = var.grafana_loki_datasource_uid != null || length(var.observe_workflows) == 0
-    error_message = "grafana_loki_datasource_uid is required when observe_workflows is non-empty."
   }
 }
