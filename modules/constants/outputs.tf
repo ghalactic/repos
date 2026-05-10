@@ -21,6 +21,15 @@ output "org_name" {
   value       = "Ghalactic"
 }
 
+output "grafana_threshold_colors" {
+  description = "Standard threshold colors for Grafana dashboards"
+  value = {
+    green  = "green"
+    yellow = "#EAB839"
+    red    = "red"
+  }
+}
+
 locals {
   issue_label_color_renovate          = "0366d6"
   issue_label_color_renovate_safe     = "168700"
