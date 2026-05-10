@@ -226,7 +226,7 @@ resource "grafana_folder" "actions" {
 }
 
 data "grafana_data_source" "loki" {
-  name = "grafanacloud-logs"
+  name = "grafanacloud-ghalactic-logs"
 }
 ```
 
