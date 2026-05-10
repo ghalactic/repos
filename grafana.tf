@@ -74,8 +74,6 @@ resource "grafana_folder" "actions" {
   title = "GitHub Actions"
 }
 
-# Dashboard JSON uses the short alias "grafanacloud-logs" which Grafana Cloud
-# resolves automatically. Alert rules require the explicit datasource UID.
 data "grafana_data_source" "loki" {
   name = "grafanacloud-ghalactic-logs"
 }

@@ -85,7 +85,7 @@ variable "use_release_action_main" {
 }
 
 variable "observe_workflows" {
-  description = "Workflows to observe with Grafana dashboards and OTLP logging. warning_seconds must be less than critical_seconds."
+  description = "Workflows to observe with Grafana dashboards and OTLP logging"
   type = map(object({
     title            = string
     warning_seconds  = number

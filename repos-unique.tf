@@ -30,6 +30,9 @@ module "repo_renovate" {
 
   manage_renovate = false
 
+  grafana_folder_uid          = grafana_folder.actions.uid
+  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
+
   observe_workflows = {
     "renovate.yml" = {
       title            = "Scheduled maintenance runs for ghalactic/renovate"
@@ -37,15 +40,15 @@ module "repo_renovate" {
       critical_seconds = 7200
     }
   }
-
-  grafana_folder_uid          = grafana_folder.actions.uid
-  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
 }
 
 module "repo_token_provider" {
   source      = "./modules/repo"
   name        = "token-provider"
   description = "Provisions GitHub tokens for Ghalactic"
+
+  grafana_folder_uid          = grafana_folder.actions.uid
+  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
 
   observe_workflows = {
     "provision-tokens.yml" = {
@@ -54,7 +57,4 @@ module "repo_token_provider" {
       critical_seconds = 3600
     }
   }
-
-  grafana_folder_uid          = grafana_folder.actions.uid
-  grafana_loki_datasource_uid = data.grafana_data_source.loki.uid
 }
