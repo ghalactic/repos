@@ -101,7 +101,7 @@ resource "grafana_dashboard_public" "observed_workflow" {
 resource "grafana_rule_group" "observed_workflow" {
   for_each = {
     for file, config in var.observe_workflows : file => config
-    if var.grafana_loki_datasource_uid != null && var.grafana_alerting_contact_point != null
+    if var.grafana_loki_datasource_uid != null
   }
 
   name             = local.workflow_names[each.key]

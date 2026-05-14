@@ -23,5 +23,9 @@ variable "GRAFANA_CLOUD_ACCESS_POLICY_TOKEN" {
 variable "grafana_contact_email" {
   description = "Email address for Grafana alerting contact point"
   type        = string
-  default     = null
+}
+
+variable "grafana_contact_point_name" {
+  description = "Name of the Grafana alerting contact point"
+  type        = string
 }
