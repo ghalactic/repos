@@ -33,7 +33,7 @@ module "repo_renovate" {
   grafana_folder_uid = grafana_folder.actions.uid
 
   grafana_loki_datasource_uid    = data.grafana_data_source.loki.uid
-  grafana_alerting_contact_point = grafana_contact_point.actions.name
+  grafana_alerting_contact_point = grafana_contact_point.this.name
 
   observe_workflows = {
     "renovate.yml" = {
@@ -52,7 +52,7 @@ module "repo_token_provider" {
   grafana_folder_uid = grafana_folder.actions.uid
 
   grafana_loki_datasource_uid    = data.grafana_data_source.loki.uid
-  grafana_alerting_contact_point = grafana_contact_point.actions.name
+  grafana_alerting_contact_point = grafana_contact_point.this.name
 
   observe_workflows = {
     "provision-tokens.yml" = {

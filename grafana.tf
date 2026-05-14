@@ -78,7 +78,7 @@ data "grafana_data_source" "loki" {
   name = "grafanacloud-ghalactic-logs"
 }
 
-resource "grafana_contact_point" "actions" {
+resource "grafana_contact_point" "this" {
   name = var.grafana_contact_point_name
 
   email {
