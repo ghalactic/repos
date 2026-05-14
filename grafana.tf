@@ -79,9 +79,9 @@ data "grafana_data_source" "loki" {
 }
 
 resource "grafana_contact_point" "this" {
-  name = var.grafana_contact_point_name
+  name = var.GRAFANA_CONTACT_POINT_NAME
 
   email {
-    addresses = [var.grafana_contact_email]
+    addresses = [var.GRAFANA_CONTACT_EMAIL]
   }
 }
