@@ -629,7 +629,7 @@
               "x": 0,
               "y": 0,
               "width": 24,
-              "height": 4,
+              "height": 5,
               "element": {
                 "kind": "ElementReference",
                 "name": "panel-5"
@@ -640,9 +640,9 @@
             "kind": "GridLayoutItem",
             "spec": {
               "x": 0,
-              "y": 4,
+              "y": 5,
               "width": 18,
-              "height": 4,
+              "height": 7,
               "element": {
                 "kind": "ElementReference",
                 "name": "panel-3"
@@ -653,9 +653,9 @@
             "kind": "GridLayoutItem",
             "spec": {
               "x": 18,
-              "y": 4,
+              "y": 5,
               "width": 6,
-              "height": 4,
+              "height": 7,
               "element": {
                 "kind": "ElementReference",
                 "name": "panel-1"
@@ -666,9 +666,9 @@
             "kind": "GridLayoutItem",
             "spec": {
               "x": 0,
-              "y": 8,
+              "y": 12,
               "width": 24,
-              "height": 11,
+              "height": 7,
               "element": {
                 "kind": "ElementReference",
                 "name": "panel-4"
