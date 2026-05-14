@@ -20,8 +20,8 @@ variable "GRAFANA_CLOUD_ACCESS_POLICY_TOKEN" {
   sensitive = true
 }
 
-variable "grafana_alerting_email" {
-  description = "Email address for Grafana alerting notifications"
+variable "grafana_contact_email" {
+  description = "Email address for Grafana alerting contact point"
   type        = string
   default     = null
 }

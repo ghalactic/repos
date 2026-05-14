@@ -79,11 +79,11 @@ data "grafana_data_source" "loki" {
 }
 
 resource "grafana_contact_point" "actions" {
-  count = var.grafana_alerting_email != null ? 1 : 0
+  count = var.grafana_contact_email != null ? 1 : 0
 
   name = "GitHub Actions"
 
   email {
-    addresses = [var.grafana_alerting_email]
+    addresses = [var.grafana_contact_email]
   }
 }
