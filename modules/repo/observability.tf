@@ -72,11 +72,13 @@ resource "grafana_dashboard" "observed_workflow" {
   config_json = replace(
     replace(
       templatefile("grafana/dashboard.json", {
-        dashboard_uid = "gha-${var.name}-${replace(each.key, ".", "-")}"
-        title         = each.value.title
-        repo          = var.name
-        workflow      = local.workflow_names[each.key]
-        workflow_file = each.key
+        dashboard_uid  = "gha-${var.name}-${replace(each.key, ".", "-")}"
+        title          = each.value.title
+        repo           = var.name
+        workflow       = local.workflow_names[each.key]
+        workflow_file  = each.key
+        color_healthy  = local.threshold_colors.healthy
+        color_critical = local.threshold_colors.critical
       }),
       "\"__LAST_RUN_STARTED_THRESHOLDS__\"",
       jsonencode(local.last_run_started_thresholds[each.key])

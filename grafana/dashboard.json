@@ -234,11 +234,11 @@
                     "steps": [
                       {
                         "value": 0,
-                        "color": "green"
+                        "color": "${color_healthy}"
                       },
                       {
                         "value": 80,
-                        "color": "red"
+                        "color": "${color_critical}"
                       }
                     ]
                   },
@@ -403,11 +403,11 @@
                     "steps": [
                       {
                         "value": 0,
-                        "color": "green"
+                        "color": "${color_healthy}"
                       },
                       {
                         "value": 80,
-                        "color": "red"
+                        "color": "${color_critical}"
                       }
                     ]
                   },
@@ -610,10 +610,10 @@
                     "steps": [
                       {
                         "value": 0,
-                        "color": "red"
+                        "color": "${color_critical}"
                       },
                       {
-                        "color": "green",
+                        "color": "${color_healthy}",
                         "value": 1
                       }
                     ]
