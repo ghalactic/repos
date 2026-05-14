@@ -25,7 +25,7 @@ variable "GRAFANA_CONTACT_EMAIL" {
   type        = string
 }
 
-variable "GRAFANA_CONTACT_POINT_NAME" {
+variable "GRAFANA_CONTACT_NAME" {
   description = "Name of the Grafana alerting contact point"
   type        = string
 }
