@@ -104,3 +104,15 @@ variable "grafana_folder_uid" {
     error_message = "grafana_folder_uid is required when observe_workflows is non-empty."
   }
 }
+
+variable "grafana_loki_datasource_uid" {
+  description = "The UID of the Loki datasource for alert rule queries"
+  type        = string
+  default     = null
+}
+
+variable "grafana_alerting_contact_point" {
+  description = "The name of the Grafana contact point for alert notifications"
+  type        = string
+  default     = null
+}

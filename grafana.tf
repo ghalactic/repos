@@ -73,3 +73,17 @@ resource "github_actions_organization_secret" "otlp_password" {
 resource "grafana_folder" "actions" {
   title = "GitHub Actions"
 }
+
+data "grafana_data_source" "loki" {
+  name = "grafanacloud-ghalactic-logs"
+}
+
+resource "grafana_contact_point" "actions" {
+  count = var.grafana_alerting_email != null ? 1 : 0
+
+  name = "GitHub Actions"
+
+  email {
+    addresses = [var.grafana_alerting_email]
+  }
+}

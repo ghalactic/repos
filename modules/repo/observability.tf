@@ -96,6 +96,93 @@ resource "grafana_dashboard_public" "observed_workflow" {
   time_selection_enabled = true
 }
 
+resource "grafana_rule_group" "observed_workflow" {
+  for_each = {
+    for file, config in var.observe_workflows : file => config
+    if var.grafana_loki_datasource_uid != null && var.grafana_alerting_contact_point != null
+  }
+
+  name             = local.workflow_names[each.key]
+  folder_uid       = var.grafana_folder_uid
+  interval_seconds = each.value.critical_seconds
+
+  rule {
+    name          = "${local.workflow_names[each.key]} run gap"
+    for           = "0s"
+    condition     = "C"
+    no_data_state = "Alerting"
+
+    annotations = {
+      summary = "No runs of ${local.workflow_names[each.key]} in ${var.name} within the last ${each.value.critical_seconds / 60} minutes"
+    }
+
+    labels = {
+      repo     = var.name
+      workflow = local.workflow_names[each.key]
+    }
+
+    notification_settings {
+      contact_point = var.grafana_alerting_contact_point
+    }
+
+    data {
+      ref_id         = "A"
+      datasource_uid = var.grafana_loki_datasource_uid
+
+      relative_time_range {
+        from = each.value.critical_seconds
+        to   = 0
+      }
+
+      model = jsonencode({
+        refId      = "A"
+        expr       = "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${var.name}\" | workflow=\"${local.workflow_names[each.key]}\" [${each.value.critical_seconds}s])) or vector(0)"
+        queryType  = "range"
+        editorMode = "code"
+      })
+    }
+
+    data {
+      ref_id         = "B"
+      datasource_uid = "-100"
+
+      relative_time_range {
+        from = 0
+        to   = 0
+      }
+
+      model = jsonencode({
+        refId      = "B"
+        type       = "reduce"
+        expression = "A"
+        reducer    = "last"
+      })
+    }
+
+    data {
+      ref_id         = "C"
+      datasource_uid = "-100"
+
+      relative_time_range {
+        from = 0
+        to   = 0
+      }
+
+      model = jsonencode({
+        refId      = "C"
+        type       = "threshold"
+        expression = "B"
+        conditions = [{
+          evaluator = {
+            type   = "lt"
+            params = [1]
+          }
+        }]
+      })
+    }
+  }
+}
+
 output "workflow_dashboard_public_urls" {
   description = "A map of observed workflow names to their public Grafana dashboard URLs."
   value = {

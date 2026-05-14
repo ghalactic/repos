@@ -32,6 +32,9 @@ module "repo_renovate" {
 
   grafana_folder_uid = grafana_folder.actions.uid
 
+  grafana_loki_datasource_uid    = data.grafana_data_source.loki.uid
+  grafana_alerting_contact_point = try(grafana_contact_point.actions[0].name, null)
+
   observe_workflows = {
     "renovate.yml" = {
       title            = "Scheduled maintenance runs for ghalactic/renovate"
@@ -47,6 +50,9 @@ module "repo_token_provider" {
   description = "Provisions GitHub tokens for Ghalactic"
 
   grafana_folder_uid = grafana_folder.actions.uid
+
+  grafana_loki_datasource_uid    = data.grafana_data_source.loki.uid
+  grafana_alerting_contact_point = try(grafana_contact_point.actions[0].name, null)
 
   observe_workflows = {
     "provision-tokens.yml" = {
