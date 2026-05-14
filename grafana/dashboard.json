@@ -78,14 +78,14 @@
             "ids": [5]
           },
           "legacyOptions": {
-            "expr": "{service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" | keep event",
+            "expr": "{service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | keep event",
             "queryType": "range"
           }
         }
       }
     ],
     "cursorSync": "Off",
-    "description": "Scheduled workflow run frequency, duration, and change tracking",
+    "description": "Workflow run duration, health, and change tracking",
     "editable": true,
     "elements": {
       "panel-1": {
@@ -93,7 +93,7 @@
         "spec": {
           "id": 1,
           "title": "Last run started",
-          "description": "Time when the last scheduled run was created",
+          "description": "Time when the last run was created",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -112,7 +112,7 @@
                       "spec": {
                         "direction": "forward",
                         "editorMode": "code",
-                        "expr": "last_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" | label_format elapsed=`{{ sub (unixEpoch now) (unixEpoch __timestamp__) }}` | unwrap elapsed [$__range]) by ()",
+                        "expr": "last_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | label_format elapsed=`{{ sub (unixEpoch now) (unixEpoch __timestamp__) }}` | unwrap elapsed [$__range]) by ()",
                         "queryType": "range"
                       }
                     },
@@ -171,7 +171,7 @@
         "spec": {
           "id": 3,
           "title": "Run duration",
-          "description": "Duration of each completed scheduled run in seconds",
+          "description": "Duration of each completed run in seconds",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -190,7 +190,7 @@
                       "spec": {
                         "direction": "backward",
                         "editorMode": "code",
-                        "expr": "last_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_completed\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" | unwrap duration_seconds [$__interval])",
+                        "expr": "last_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_completed\" | repo=\"${repo}\" | workflow=\"${workflow}\" | unwrap duration_seconds [$__interval])",
                         "queryType": "range"
                       }
                     },
@@ -295,7 +295,7 @@
         "spec": {
           "id": 4,
           "title": "Recent runs",
-          "description": "Log entries for scheduled workflow run events",
+          "description": "Log entries for workflow run events",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -314,7 +314,7 @@
                       "spec": {
                         "direction": "backward",
                         "editorMode": "code",
-                        "expr": "{service_name=\"workflow-observability\"} | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\"",
+                        "expr": "{service_name=\"workflow-observability\"} | repo=\"${repo}\" | workflow=\"${workflow}\"",
                         "queryType": "range"
                       }
                     },
@@ -522,7 +522,7 @@
         "spec": {
           "id": 5,
           "title": "Run health",
-          "description": "Whether scheduled runs are arriving within the expected intervals",
+          "description": "Whether runs are arriving within the expected intervals",
           "links": [],
           "data": {
             "kind": "QueryGroup",
@@ -539,7 +539,7 @@
                         "name": "grafanacloud-logs"
                       },
                       "spec": {
-                        "expr": "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" | trigger=\"schedule\" [__CRITICAL_THRESHOLD_SECONDS__s])) or vector(0)",
+                        "expr": "sum(count_over_time({service_name=\"workflow-observability\"} | event=\"workflow_run_created\" | repo=\"${repo}\" | workflow=\"${workflow}\" [__CRITICAL_THRESHOLD_SECONDS__s])) or vector(0)",
                         "queryType": "range",
                         "editorMode": "code",
                         "direction": "backward",
