@@ -70,15 +70,19 @@ resource "grafana_dashboard" "observed_workflow" {
   folder = var.grafana_folder_uid
 
   config_json = replace(
-    templatefile("grafana/dashboard.json", {
-      dashboard_uid = "gha-${var.name}-${replace(each.key, ".", "-")}"
-      title         = each.value.title
-      repo          = var.name
-      workflow      = local.workflow_names[each.key]
-      workflow_file = each.key
-    }),
-    "\"__LAST_RUN_STARTED_THRESHOLDS__\"",
-    jsonencode(local.last_run_started_thresholds[each.key])
+    replace(
+      templatefile("grafana/dashboard.json", {
+        dashboard_uid = "gha-${var.name}-${replace(each.key, ".", "-")}"
+        title         = each.value.title
+        repo          = var.name
+        workflow      = local.workflow_names[each.key]
+        workflow_file = each.key
+      }),
+      "\"__LAST_RUN_STARTED_THRESHOLDS__\"",
+      jsonencode(local.last_run_started_thresholds[each.key])
+    ),
+    "__CRITICAL_THRESHOLD_SECONDS__",
+    tostring(each.value.critical_seconds)
   )
 }
 
