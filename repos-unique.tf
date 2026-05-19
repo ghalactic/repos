@@ -62,3 +62,20 @@ module "repo_token_provider" {
     }
   }
 }
+
+module "repo_repo_scheduler" {
+  source      = "./modules/repo"
+  name        = "repo-scheduler"
+  description = "Schedules repository events for more reliable GitHub Actions workflow runs"
+
+  topics = [
+    "actions",
+    "github-actions",
+    "scheduling",
+    "automation",
+    "cron",
+    "dispatch",
+  ]
+
+  has_discussions = true
+}
