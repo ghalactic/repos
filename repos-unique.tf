@@ -77,5 +77,7 @@ module "repo_repo_scheduler" {
     "dispatch",
   ]
 
+  renovate_post_upgrade_command = "make regenerate"
+
   has_discussions = true
 }
