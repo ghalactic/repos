@@ -87,16 +87,3 @@ module "repo_repo_scheduler_cloudflare_token_provider" {
   name        = "repo-scheduler-cloudflare-token-provider"
   description = "Triggers the token-provider provisioning workflow on a reliable schedule"
 }
-
-import {
-  to = module.repo_repo_scheduler_cloudflare_token_provider.github_repository.this
-  id = "repo-scheduler-cloudflare-token-provider"
-}
-import {
-  to = module.repo_repo_scheduler_cloudflare_token_provider.github_actions_repository_permissions.this
-  id = "repo-scheduler-cloudflare-token-provider"
-}
-import {
-  to = module.repo_repo_scheduler_cloudflare_token_provider.github_issue_labels.this
-  id = "repo-scheduler-cloudflare-token-provider"
-}
