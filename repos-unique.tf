@@ -82,8 +82,66 @@ module "repo_repo_scheduler" {
   has_discussions = true
 }
 
-module "repo_repo_scheduler_cloudflare_token_provider" {
-  source      = "./modules/repo"
-  name        = "repo-scheduler-cloudflare-token-provider"
-  description = "Triggers the token-provider provisioning workflow on a reliable schedule"
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_repository.this
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_repository_vulnerability_alerts.this
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_actions_repository_permissions.this
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_branch_protection.default_branch
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_team_repository.renovate_reviewers
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_issue_labels.this
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_repository_file.license
+
+  lifecycle {
+    destroy = false
+  }
+}
+
+removed {
+  from = module.repo_repo_scheduler_cloudflare_token_provider.github_repository_file.dot_github_renovate_json
+
+  lifecycle {
+    destroy = false
+  }
 }
