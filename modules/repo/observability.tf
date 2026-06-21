@@ -130,6 +130,7 @@ resource "grafana_rule_group" "observed_workflow" {
     data {
       ref_id         = "A"
       datasource_uid = var.grafana_loki_datasource_uid
+      query_type     = "range"
 
       relative_time_range {
         from = each.value.critical_seconds
