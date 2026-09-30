@@ -49,6 +49,12 @@ output "issue_labels" {
       color       = local.issue_label_color_renovate
     }
 
+    gh-token-dashboard = {
+      name        = "gh-token-dashboard"
+      description = "A summary of GitHub token provisioning"
+      color       = "ffffff"
+    }
+
     github-actions = {
       name        = "github-actions"
       description = "Pull requests that update GitHub Actions dependencies"
