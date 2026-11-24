@@ -1,0 +1,51 @@
+on:
+  workflow_call:
+    inputs:
+      isScheduled:
+        description: Whether this CI workflow run is scheduled
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Detect package manager
+        id: pm
+        run: |
+          if jq -er '.packageManager // empty | startswith("pnpm")' package.json > /dev/null 2>&1; then
+            echo "name=pnpm" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=npm" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up pnpm
+        if: steps.pm.outputs.name == 'pnpm'
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: ${{ steps.pm.outputs.name }}
+
+      - name: Install dependencies
+        run: make link-dependencies
+
+      - name: Make
+        run: make ci
+        env:
+          FIXTURES_GITHUB_TOKEN: ${{ secrets.FIXTURES_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish coverage
+        if: ${{ inputs.isScheduled != 'true' }}
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
