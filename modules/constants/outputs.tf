@@ -31,6 +31,36 @@ locals {
 output "issue_labels" {
   description = "The issue labels to use"
   value = {
+    needs-triage = {
+      name        = "needs-triage"
+      description = "Maintainer needs to evaluate this issue"
+      color       = "fbca04"
+    }
+
+    needs-info = {
+      name        = "needs-info"
+      description = "Waiting on reporter for more information"
+      color       = "fef2c0"
+    }
+
+    ready-for-agent = {
+      name        = "ready-for-agent"
+      description = "Fully specified, ready for an AFK agent"
+      color       = "168700"
+    }
+
+    ready-for-human = {
+      name        = "ready-for-human"
+      description = "Requires human implementation"
+      color       = "0366d6"
+    }
+
+    wontfix = {
+      name        = "wontfix"
+      description = "Will not be actioned"
+      color       = "ededed"
+    }
+
     blocked = {
       name        = "blocked"
       description = "Can't be worked on until something else is done"
