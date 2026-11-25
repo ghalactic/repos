@@ -21,7 +21,7 @@ jobs:
       - name: Detect toolchain
         id: detect
         run: |
-          if [[ -f mise.toml ]]; then
+          if [[ -f mise.toml || -f mise/config.toml ]]; then
             echo "runner=mise" >> "$GITHUB_OUTPUT"
           else
             echo "runner=make" >> "$GITHUB_OUTPUT"
