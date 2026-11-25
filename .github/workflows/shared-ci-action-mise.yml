@@ -1,0 +1,47 @@
+on:
+  workflow_call:
+    inputs:
+      isScheduled:
+        description: Whether this CI workflow run is scheduled
+        type: boolean
+        required: false
+        default: false
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up mise
+        uses: jdx/mise-action@v5
+
+      - name: Locate pnpm store
+        id: pnpm
+        run: |
+          if command -v pnpm > /dev/null; then
+            echo "store=$(pnpm store path)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Cache pnpm store
+        if: steps.pnpm.outputs.store
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.pnpm.outputs.store }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-store-
+
+      - name: Mise
+        run: mise run ci
+        env:
+          FIXTURES_GITHUB_TOKEN: ${{ secrets.FIXTURES_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish coverage
+        if: "!inputs.isScheduled"
+        uses: codecov/codecov-action@v7
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

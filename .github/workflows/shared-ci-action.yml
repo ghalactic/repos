@@ -8,44 +8,39 @@ on:
         default: false
 
 jobs:
-  ci:
-    name: CI
+  detect:
+    name: Detect toolchain
     runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ steps.detect.outputs.runner }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Detect package manager
-        id: pm
+      - name: Detect toolchain
+        id: detect
         run: |
-          if jq -er '.packageManager // empty | startswith("pnpm")' package.json > /dev/null 2>&1; then
-            echo "name=pnpm" >> "$GITHUB_OUTPUT"
+          if [[ -f mise.toml ]]; then
+            echo "runner=mise" >> "$GITHUB_OUTPUT"
           else
-            echo "name=npm" >> "$GITHUB_OUTPUT"
+            echo "runner=make" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Set up pnpm
-        if: steps.pm.outputs.name == 'pnpm'
-        uses: pnpm/action-setup@v6
+  make:
+    name: Make
+    needs: detect
+    if: needs.detect.outputs.runner == 'make'
+    uses: $/.github/workflows/shared-ci-action-make.yml
+    with:
+      isScheduled: ${{ inputs.isScheduled }}
+    secrets: inherit
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: ${{ steps.pm.outputs.name }}
-
-      - name: Install dependencies
-        run: make link-dependencies
-
-      - name: Make
-        run: make ci
-        env:
-          FIXTURES_GITHUB_TOKEN: ${{ secrets.FIXTURES_GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Publish coverage
-        if: ${{ inputs.isScheduled != 'true' }}
-        uses: codecov/codecov-action@v7
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+  mise:
+    name: Mise
+    needs: detect
+    if: needs.detect.outputs.runner == 'mise'
+    uses: $/.github/workflows/shared-ci-action-mise.yml
+    with:
+      isScheduled: ${{ inputs.isScheduled }}
+    secrets: inherit
